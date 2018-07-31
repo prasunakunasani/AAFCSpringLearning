@@ -73,14 +73,14 @@ Coach theCoach = context.getBean("thatSillyCoach", Coach.class)
 - in the future to add more jars specific to Spring MVC, can just try to add a module with those specific jars, copy the jars over and then delete the temp module
 
 ###### S1 Section 7, Lecture 54,55 - Explicit Component Names - Write some code
+- Here: 
 - Create a new xml file: 
     - Right click src folder, New->XML Configuration File->Spring config->just write the name 'applicationContext' or something
     - configure it when Idea prompts you to
-- I think you f'd up before but now, know that you can right click on the src folder, click 'Load/Unload Modules'
-- To applicationContext.xml, add the context:component scan line
+- - To applicationContext.xml, add the context:component scan line
     - this line will scan all the @component annotated classes
 - whatever package name you write in the application context, you need to make sure that you right click src, New->package, give the exact same name
-- 
+- Create Coach interface, TennisCoach class and AnnotationDemo App
 
 ###### S1 Section 7, Lecture 56 - Default Component Names - Overview
 
