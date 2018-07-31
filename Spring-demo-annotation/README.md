@@ -83,6 +83,27 @@ Coach theCoach = context.getBean("thatSillyCoach", Coach.class)
 - Create Coach interface, TennisCoach class and AnnotationDemo App
 
 ###### S1 Section 7, Lecture 56 - Default Component Names - Overview
+- We already learned: 
+    1) Specify the bean id in the component annotation
+    ```java
+      @Component("thatSillyCoach")
+      public class TennisCoach implements Coach{...
+    ```
+    - 'thatSillyCoach' was the bean id. 
+    - Now, we can remove the bean id   
+- Spring also supports Default Bean IDs
+    - Default bean id: the class name, make first letter lower-case
+    - eg: if Class Name was TennisCoach -> Default Bean Id becomes tennisCoach
+- Code example
+```java
+      @Component("thatSillyCoach")
+      public class TennisCoach implements Coach{...
+```
+```java
+//get the bean from spring container
+Coach theCoach = context.getBean("tennisCoach",Coach.class); 
+```
+    - here, we are using the default bean id tennisCoach. 
 
 ###### S1 Section 7, Lecture 57 - Default Component Names - Write some code
 
