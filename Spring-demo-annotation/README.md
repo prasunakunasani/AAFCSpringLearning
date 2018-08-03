@@ -5,9 +5,9 @@
     - eg: the shoe info below
     - Java annotations are simply meta data about the class
 - Processed at compile time or run-time for special processing
-- ![Boot metadata]()
+- ![Boot metadata](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-07-25%2016_41_30-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 **Annotation Example**
-- ![Annotations example]()
+- ![Annotations example](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-07-26%2015_09_53-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - The annotation here tells the compiler: "Hey, we're gonna implement the interface, extend the class and override the method exactly as listed in the interface or the parent class". 
 - Compiler will check class and make sure you are actually overiding the method
     - as long as you override exactly as advertised, everything will work just fine
@@ -126,7 +126,7 @@ Compare your code to the solution. The solution is available here:
 - Now will also provide daily fortunes
     - New Helper: FortuneService
     - This is a dependency
-    - Placeholder for the coach fortune service image link
+    - ![Dependency](https://github.com/whereismybaymax/AAFCjavaJunitLearning/blob/master/Notes/Images/2018-04-11%2015_09_51-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 **What is Spring AutoWiring**
 - For dependency injection, Spring can use auto wiring
     - autowires objects together
@@ -208,19 +208,46 @@ public class TennisCoach implements Coach{
 - In the background, Spring realizes that it needs to satisfy this dependency
     - Spring will find a bean that implements FortuneService
 - Meaning, Spring will scan all the components, find the component, implements this FortuneService interface (HappyFortuneService), take that bean, inject it (autowire) here into the tennis coach
-- ![]()
+- ![No Assembly Required](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-08-02%2020_00_22-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - Overview: 
-- Simply retreiving the Coach object from the object factory
+- Simply retrieving the Coach object from the object factory
 - For the object factory, all the dependencies (helper objects) are being handled (injected) by making use of annotations and autowiring
-- When we simply retrive the Coach, we get it fully assembled
+- When we simply retrieve the Coach, we get it fully assembled
     - We get the Coach object and it's FortuneService together cause' of Spring
 
-
 ###### S1 Section 8, Lecture 60 - FAQ - What if there are Multiple Implementations
+AUTOWIRING
+**FAQ: What if there are multiple FortuneService implementations?**
+- As in, based on the above, Spring will scan for a component that implements FortuneService interface
+- In our example, we're setting it up so HappyFortuneService implements FortuneService. So, this meets are requirements
+- what is there are multiple components that implement FortuneService? Which one will Spring pick then?
+- QUESTION
+    - When using autowiring, what if there are multiple FortuneService implementations? Like in the image below?
+    - ![Multiple FortuneService implementations]()
+- ANSWER
+    - Spring has special support to handle this case. Use the @Qualifier annotation. 
 
 ###### S1 Section 8, Lecture 61, 62 - Constructor Injection - Write some code
+- Here: 
 
 ###### S1 Section 8, Lecture 63 - FAQ - Constructor Injection - Autowired Optional? 
+- Question
+    - I have commented the Autowired annotation. But still it worked. How did it work?
+ ```java
+    //@Autowired
+    public TennisCoach(FortuneService theFortuneService) {
+        System.out.println(" theFortuneService " + theFortuneService);
+        fortuneService = theFortuneService;
+    }
+```
+- Answer: 
+    - This is a new feature of Spring 4.3.
+    - Here is the snippet from the Spring Docs.
+    - Section 1.9.2: Autowired
+        - As of Spring Framework 4.3, an @Autowired annotation on such a constructor is no longer necessary if the target bean only defines one constructor to begin with. However, if several constructors are available, at least one must be annotated to teach the container which one to use.
+            - Eg: - In our case, the target bean is TennisCoach 
+    - "I personally prefer to use the @Autowired annotation because it makes the code more readable. But as mentioned, the @Autowired is not required for this scenario."
+    - Link to the docs: https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-autowired-annotation 
 
 ###### S1 Section 8, Lecture 64 - Setter Injection - Overview
 
