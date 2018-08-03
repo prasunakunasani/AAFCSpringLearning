@@ -121,6 +121,100 @@ Compare your code to the solution. The solution is available here:
 - http://www.luv2code.com/downloads/udemy-spring-hibernate/solution-practice-activities.zip
 
 ###### S1 Section 8, Lecture 59 - Spring configuration with Java Annotations Dependency Injection - Constructor Injection - Overview
+**Demo Example**
+- Our Coach already provides daily workouts
+- Now will also provide daily fortunes
+    - New Helper: FortuneService
+    - This is a dependency
+    - Placeholder for the coach fortune service image link
+**What is Spring AutoWiring**
+- For dependency injection, Spring can use auto wiring
+    - autowires objects together
+- Spring will look for a class that matches a given property 
+    - matches by type: class or interface
+- Once Spring finds a match, it will inject it automatically ...hence it is autowired
+**Autowiring Example**
+- Injecting a FortuneService into a Coach implementation
+- Spring will scan all the @Components
+    - Sees that to satisfy a dependency, it needs to inject a FortuneService
+    - So, Spring checks to see if any one implements FortuneService interface???
+- If so, Spring will grab that Component/Bean and inject it. 
+    - For example: HappyFortuneService
+    - Spring will find the implementation and automatically inject it into our class
+
+**Autowiring Injection Types**
+- Constructor Injection
+- Setter Injection
+- Field Injection
+
+**Development Process - Constructor Injection**
+1) Define the dependency interface and class
+2) Create a constructor in your class for injections
+3) Configure the dependency injection with @Autowired Annotation
+   
+**Step 1: Define the dependency interface and class**
+```java
+//File: FortuneService.java
+public interface FortuneService {
+    public String getFortune();     
+}
+```
+
+```java
+//File:HappyFortuneService.java
+@Component
+public class HappyFortuneService implements FortuneService{
+    
+    public String getFortune(){
+        return "Today is your lucky day"; 
+    }
+}
+```
+- implementation of the interface
+- New: Have @Component annotation so Spring can  find this implementation for the Spring Container
+
+**Step 2: Create a constructor in your class for injections**
+```java
+@Component
+public class TennisCoach implements Coach{
+    
+    private FortuneService fortuneService; 
+    
+    public TennisCoach(FortuneService theFortuneService){
+        fortuneService = theFortuneService; 
+    }
+}
+```
+- Tennis Coach has a constructor with the same name as the class
+- We pass in the dependency and make a basic assignment
+
+**Step 3: Configure the dependency injection with @Autowired annotation
+```java
+//file: TennisCoach.java
+@Component
+public class TennisCoach implements Coach{
+    
+    private FortuneService fortuneService; 
+    
+    @Autowired
+    public TennisCoach(FortuneService theFortuneService){
+        fortuneService = theFortuneService; 
+    }
+}
+```
+- At the constructor, we have @Autowired
+    - For the parameter being pass (theFortuneService), we want Spring to automatically wire up with component
+    - Instead of doing it long hand using XMLconfig, we are making use of this @Autowired annotation
+- In the background, Spring realizes that it needs to satisfy this dependency
+    - Spring will find a bean that implements FortuneService
+- Meaning, Spring will scan all the components, find the component, implements this FortuneService interface (HappyFortuneService), take that bean, inject it (autowire) here into the tennis coach
+- ![]()
+- Overview: 
+- Simply retreiving the Coach object from the object factory
+- For the object factory, all the dependencies (helper objects) are being handled (injected) by making use of annotations and autowiring
+- When we simply retrive the Coach, we get it fully assembled
+    - We get the Coach object and it's FortuneService together cause' of Spring
+
 
 ###### S1 Section 8, Lecture 60 - FAQ - What if there are Multiple Implementations
 
