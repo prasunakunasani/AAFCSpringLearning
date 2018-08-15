@@ -360,6 +360,33 @@ public class TennisCoach implements Coach{
     - Even in spring documentation, they say you get same functionality 
 
 ###### S1 Section 8, Lecture 70 - Qualifiers for Dependency Injection - Overview
+- So far, using Autowiring where Spring scans for components to see if anyone is implementing the FortuneService interface
+- But what happens if there are multiple implementations out there? Which one will Spring pick? How will it know which one to pick? 
+- ![Multiple FortuneService implementations](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-08-03%2012_07_34-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
+- Spring will give an error message if there are multiple implementations:
+- ![Error messages]()
+- That there was a error that it was expecting a single implementation but found 4. And then it'll give all four
+- Solution..Need to tell Spring which bean to use
+**Solution: Be specific! - @Qualifier**
+```java
+@Component
+public class TennisCoach implements Coach{
+    
+    @Autowired
+    @Qualifier("happyFortuneService")
+    private FortuneService fortuneService; 
+    ... 
+}
+```  
+- ![desired bean id]()
+- Giving bean id of what we want to use
+    - the bean id is just the default bean id 
+- In qualifier, you simply specify the bean id that you want to inject
+**Injection Types**
+- Can apply @Qualifer annotation to: 
+    - Constructor injection
+    - Setter injection methods
+    - Field injection
 
 ###### S1 Section 8, Lecture 71,72 - Qualifiers for Dependency Injection - Write some code
 
