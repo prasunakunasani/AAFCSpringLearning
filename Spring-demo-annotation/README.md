@@ -299,6 +299,7 @@ public class TennisCoach implements Coach {
 - we set the Autowired annotation so Spring will make it available for dependency injection
 
 ###### S1 Section 8, Lecture 65 - Setter Injection - Write some code
+Here: 
 
 ###### S1 Section 8, Lecture 66 - Method Injection
 
