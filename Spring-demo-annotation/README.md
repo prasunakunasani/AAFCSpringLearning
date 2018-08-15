@@ -223,7 +223,7 @@ AUTOWIRING
 - what is there are multiple components that implement FortuneService? Which one will Spring pick then?
 - QUESTION
     - When using autowiring, what if there are multiple FortuneService implementations? Like in the image below?
-    - ![Multiple FortuneService implementations]()
+    - ![Multiple FortuneService implementations](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-08-03%2012_07_34-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - ANSWER
     - Spring has special support to handle this case. Use the @Qualifier annotation. 
 
@@ -235,6 +235,7 @@ AUTOWIRING
     - I have commented the Autowired annotation. But still it worked. How did it work?
  ```java
     //@Autowired
+    //this is the constructor
     public TennisCoach(FortuneService theFortuneService) {
         System.out.println(" theFortuneService " + theFortuneService);
         fortuneService = theFortuneService;
@@ -250,6 +251,52 @@ AUTOWIRING
     - Link to the docs: https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-autowired-annotation 
 
 ###### S1 Section 8, Lecture 64 - Setter Injection - Overview
+- So far covered Constructor injection
+- Setter Injection is injecting dependencies by calling setter methods in your class
+- Same autowiring example: 
+    - Injecting Fortune Service into a Coach implementation
+    - Spring will scan @Components
+    - Spring checks if any of the beans implements FortuneService interface
+    - If so, injects them. For eg: HappyFortuneService
+
+**Development Process - Setter Injection**
+1) Create setter method(s) in your class for injections
+2) Configure the dependency injection with @Autowired Annotation
+
+**Step 1: Create setter method(s) in your class for injections**
+```java
+//TennisCoach.java
+@Component
+public class TennisCoach implements Coach {
+    private FortuneService fortuneService; 
+    
+    public TennisCoach(){}
+    
+    public void setFortuneService(FortuneService fortuneService){
+        this.fortuneService = fortuneService; 
+    }
+    ...
+}
+```
+- defining a setter method for the fortuneService
+
+**Step 2: Configure the dependency injection with Autowired Annotation**
+```java
+//TennisCoach.java
+@Component
+public class TennisCoach implements Coach {
+    private FortuneService fortuneService; 
+    
+    public TennisCoach(){}
+    
+    @Autowired
+    public void setFortuneService(FortuneService fortuneService){
+        this.fortuneService = fortuneService; 
+    }
+    ...
+}
+```
+- we set the Autowired annotation so Spring will make it available for dependency injection
 
 ###### S1 Section 8, Lecture 65 - Setter Injection - Write some code
 
@@ -516,3 +563,130 @@ AUTOWIRING
 ###### S1 Section 23, Lecture 218 - @OneToOne - Bi-Directional - Cascade Delete
 
 ###### S1 Section 23, Lecture 219,220 - @OneToOne - Bi-Directional - Delete Only InstructorDetail
+
+###### S1 Section 24, Lecture 221,222 - @OneToMany - Bi-Directional Overview
+
+###### S1 Section 24, Lecture 223 - @OneToMany - Bi-Directional - Database Prep Work
+
+###### S1 Section 24, Lecture 224 - @OneToMany - Bi-Directional - Create Course Mapping
+
+###### S1 Section 24, Lecture 225 - @OneToMany - Bi-Directional - Define Course Mapping
+
+###### S1 Section 24, Lecture 226 - @OneToMany - BiDirectional - Update Instructor
+
+###### S1 Section 24, Lecture 227 - @OneToMany - BiDirectional - Add Instructor to Database
+
+###### S1 Section 24, Lecture 228 - @OneToMany - BiDirectional - Create Courses for Instructor
+
+###### S1 Section 24, Lecture 229 - @OneToMany - BiDirectional - Retrive Insturctor Courses 
+
+###### S1 Section 24, Lecture 230 - @OneToMany - BiDirectional - Delete a Course
+
+###### S1 Section 25, Lecture 231,232 - Eager vs Lazy Loading - Overview
+
+###### S1 Section 25, Lecture 233 - Eager vs Lazy Loading - Coding - Eager
+
+###### S1 Section 25, Lecture 234 - Eager vs Lazy Loading - Coding - Lazy
+
+###### S1 Section 25, Lecture 235 - Eager vs Lazy Loading - Closing the Session
+
+###### S1 Section 25, Lecture 236 - Eager vs Lazy Loading - Coding - Resolve Lazy Loading Issue
+
+###### S1 Section 25, Lecture 237 - Eager vs Lazy Loading - Coding - HQL JOIN FETCH
+
+###### S1 Section 25, Lecture 238 - FAQ: How to load the courses at a later time in the application?
+
+###### S1 Section 26, Lecture 239,240 - @OneToMany - Uni-Directional - Overview
+
+###### S1 Section 26, Lecture 241 - FAQ: @JoinColumn ...where does it find the column?
+
+###### S1 Section 26, Lecture 242 - @OneToMany - Uni-Directional - Set up database tables
+
+###### S1 Section 26, Lecture 243 - @OneToMany - Uni-Directional - Create Review Class
+
+###### S1 Section 26, Lecture 244 - @OneToMany - Uni-Directional - Configure Fetch Type
+
+###### S1 Section 26, Lecture 245 - @OneToMany - Uni-Directional - Create Course Reviews
+
+###### S1 Section 26, Lecture 246 - @OneToMany - Uni-Directional - Get Course Reviews
+
+###### S1 Section 26, Lecture 247 - @OneToMany - Uni-Directional - Delete Course Reviews
+
+###### S1 Section 27, Lecture 248,249 - @ManyToMany - Overview
+
+###### S1 Section 27, Lecture 250 - @ManyToMany - Set up database tables
+
+###### S1 Section 27, Lecture 251 - @ManyToMany - Update Course class
+
+###### S1 Section 27, Lecture 252 - @ManyToMany - Configure Course for many-to-many
+
+###### S1 Section 27, Lecture 253 - @ManyToMany - Configure Student for many-to-many
+
+###### S1 Section 27, Lecture 254 - @ManyToMany - Create a Main App
+
+###### S1 Section 27, Lecture 255 - @ManyToMany - Review app output
+
+###### S1 Section 27, Lecture 256 - @ManyToMany - Add more course for a student
+
+###### S1 Section 27, Lecture 257 - @ManyToMany - Verify Data in Join Table
+
+###### S1 Section 27, Lecture 258 - @ManyToMany - Get Courses for Student
+
+###### S1 Section 27, Lecture 259 - @ManyToMany - Delete a Course
+
+###### S1 Section 27, Lecture 260 - @ManyToMany - Delete a Student
+
+###### S1 Section 28, Lecture 261 - Project Overview and Demo
+
+###### S1 Section 28, Lecture 262 - Source Files for Spring MVC + Hibernate Web App
+
+###### S1 Section 28, Lecture 263 - Set up Sample Data for Database
+
+###### S1 Section 28, Lecture 264,265 - Test Database Connection
+
+###### S1 Section 28, Lecture 266,268 - Set up Dev Environment
+
+###### S1 Section 28, Lecture 267 - HEADS UP - FOR JAVA 9 USERS - Spring MVC CRUD
+
+###### S1 Section 28, Lecture 261 -    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
