@@ -323,6 +323,28 @@ public class TennisCoach implements Coach {
 - The autowired here will use this to autowired the function
 
 ###### S1 Section 8, Lecture 67 - Field Injection - Overview
+- Inject dependencies by setting field values on your class directly (even private fields)
+    - In the background, accomplished by using Java Reflection
+    
+**Development Process - Field Injection**
+1) Configure the dependency injection with Autowired Annotation
+    - Applied directly to the field
+    - No need for setter methods
+
+**Step 1: Configure the dependency injection with Autowired Annotation**
+```java
+//TennisCoach.java
+public class TennisCoach implements Coach{
+    @Autowired
+    private FortuneService fortuneService; 
+    
+    public TennisCoach(){}
+    
+    // no need for setter method
+}
+```
+- here, instead of using contructor injection or setter injection, we place it directly on the field
+    - BTS, Spring will set this field and create the object using Java technonology called reflection
 
 ###### S1 Section 8, Lecture 68 - Field Injection - Write some code
 
