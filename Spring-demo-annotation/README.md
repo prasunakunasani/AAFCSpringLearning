@@ -345,10 +345,19 @@ public class TennisCoach implements Coach{
 ```
 - here, instead of using contructor injection or setter injection, we place it directly on the field
     - BTS, Spring will set this field and create the object using Java technonology called reflection
+- Spring will call the default constructor and inject a fortuneService implementation directly into the class using java's reflection
 
 ###### S1 Section 8, Lecture 68 - Field Injection - Write some code
+- Here: 
+- Spring will inject the fortuneService, print out our daily workout and then print the happy fortune
+    - the happy fortune is coming from fortuneService wired  
 
-###### S1 Section 8, Lecture 69 - Which Injection Type Should You Use? 
+###### S1 Section 8, Lecture 69 - Which Injection Type Should You Use?
+- We covered Consturctor Injection, Setter Injection and Field injection 
+- Choose a style and stay consistent in your project
+- Is one better than the other? 
+    - You'll end up getting the same functionality so..not really
+    - Even in spring documentation, they say you get same functionality 
 
 ###### S1 Section 8, Lecture 70 - Qualifiers for Dependency Injection - Overview
 
