@@ -302,6 +302,25 @@ public class TennisCoach implements Coach {
 Here: 
 
 ###### S1 Section 8, Lecture 66 - Method Injection
+- Can inject dependencies by calling ANY method on your class
+- Simply give: @Autowired
+- insetad of setter method, can use any method
+```java
+//TennisCoach.java
+@Component
+public class TennisCoach implements Coach {
+    private FortuneService fortuneService; 
+    
+    public TennisCoach(){}
+    
+    @Autowired
+    public void doSomeCrazyStuff(FortuneService fortuneService){
+        this.fortuneService = fortuneService; 
+    }
+    ...
+}
+```
+- The autowired here will use this to autowired the function
 
 ###### S1 Section 8, Lecture 67 - Field Injection - Overview
 
