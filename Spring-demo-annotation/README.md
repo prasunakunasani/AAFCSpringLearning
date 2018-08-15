@@ -385,7 +385,7 @@ public class TennisCoach implements Coach{
     - the bean id is just the default bean id 
 - In qualifier, you simply specify the bean id that you want to inject
 **Injection Types**
-- Can apply @Qualifer annotation to: 
+- Can apply @Qualifier annotation to: 
     - Constructor injection
     - Setter injection methods
     - Field injection
@@ -415,13 +415,97 @@ public class RESTFortuneService .... {
 ```
 - Then you can access it using the name of "foo". 
 
-###### S1 Section 8, Lecture 74 - Using @Quantifiers with Constructors - Overview
+###### S1 Section 8, Lecture 74 - Using @Qualifier with Constructors - Overview
 **Using @Qualifier with Consturctors**
+- @Qualifier is a nice feature, but it is tricky when used with Constructors.
+- The syntax is much different from other examples and not exactly intuitive.  Consider this the "deep end of the pool" when it comes to Spring configuration
+- You have to place the @Qualifier annotation inside of the constructor arguments. 
+- Here's an example from the classroom example. It's updated to make use of constructor injection, with @Autowired and @Qualifier. Make note of the code in comment ///block below:
+```java
+package com.luv2code.springdemo;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+@Component
+public class TennisCoach implements Coach {
+
+    private FortuneService fortuneService;
+
+    // define a default constructor
+    public TennisCoach() {
+        System.out.println(">> TennisCoach: inside default constructor");
+    }
+    //////////////////////////////////////
+    @Autowired
+    public TennisCoach(@Qualifier("randomFortuneService") FortuneService theFortuneService) {
+
+        System.out.println(">> TennisCoach: inside constructor using @autowired and @qualifier");
+        
+        fortuneService = theFortuneService;
+    }
+    //////////////////////////////////////
+            
+    /*
+    @Autowired
+    public void doSomeCrazyStuff(FortuneService theFortuneService) {
+        System.out.println(">> TennisCoach: inside doSomeCrazyStuff() method");
+        fortuneService = theFortuneService;
+    }
+    */
+    
+    /*
+    @Autowired
+    public TennisCoach(FortuneService theFortuneService) {
+        fortuneService = theFortuneService;
+    }
+    */
+    
+    @Override
+    public String getDailyWorkout() {
+        return "Practice your backhand volley";
+    }
+
+    @Override
+    public String getDailyFortune() {
+        return fortuneService.getFortune();
+    }
+}
+```
+- For detailed documentation on using @Qualified with Constructors, see this link in the Spring Reference Manual
+    - https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-autowired-annotation-qualifiers 
+ - todo for pk: need to see how it's done with setters since field injection seems to be bad practice and constructor injection with qualifier looks scary
 
 ###### S1 Section 8, Lecture 75 - How to inject properties file using Java annotations
+**FAQ: How to inject properties file using Java annotations**
+- This solution will show you how inject values from a properties file using annotatons. The values will no longer be hard coded in the Java code. 
+1) Create a properties file to hold your properties. It will be a name value pair. 
+    - New text file:  src/sport.properties
+```properties
+foo.email=myeasycoach@luv2code.com
+foo.team=Silly Java Coders
+```
+2) Load the properties file in the XML config file
+    - File: applicationContext.xml
+    - This should appear just after the <context:component-scan .../> line
+```xml
+<context:property-placeholder location="classpath:sport.properties"/> 
+```
+3) Inject the properties values into your Swim Coach: SwimCoach.java
+```java
+@Value("${foo.email}")
+private String email;
+    
+@Value("${foo.team}")
+private String team;
+```
+- Can download entire code from here: http://www.luv2code.com/downloads/spring-hibernate/spring-props-annotation-demo.zip
 
 ###### S1 Section 8, Lecture 76 - Practical Activity #5 - Dependency Injection with Annotations
+**Practice Activity #5 - Dependency Injection with Annotations**
+
+
 
 ###### S1 Section 9, Lecture 77 - @Scope Annotation - Overview
 
