@@ -248,7 +248,8 @@ AUTOWIRING
         - As of Spring Framework 4.3, an @Autowired annotation on such a constructor is no longer necessary if the target bean only defines one constructor to begin with. However, if several constructors are available, at least one must be annotated to teach the container which one to use.
             - Eg: - In our case, the target bean is TennisCoach 
     - "I personally prefer to use the @Autowired annotation because it makes the code more readable. But as mentioned, the @Autowired is not required for this scenario."
-    - Link to the docs: https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-autowired-annotation 
+    - Link to the docs: https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-autowired-annotation, 
+        - https://www.vojtechruzicka.com/field-dependency-injection-considered-harmful/ 
 
 ###### S1 Section 8, Lecture 64 - Setter Injection - Overview
 - So far covered Constructor injection
@@ -358,6 +359,7 @@ public class TennisCoach implements Coach{
 - Is one better than the other? 
     - You'll end up getting the same functionality so..not really
     - Even in spring documentation, they say you get same functionality 
+- However, Field Injection gives a warning in Intellij: https://stackoverflow.com/questions/39890849/what-exactly-is-field-injection-and-how-to-avoid-it 
 
 ###### S1 Section 8, Lecture 70 - Qualifiers for Dependency Injection - Overview
 - So far, using Autowiring where Spring scans for components to see if anyone is implementing the FortuneService interface
@@ -387,12 +389,35 @@ public class TennisCoach implements Coach{
     - Constructor injection
     - Setter injection methods
     - Field injection
-
+    
 ###### S1 Section 8, Lecture 71,72 - Qualifiers for Dependency Injection - Write some code
+- stubbing the FortuneService implementations 
+- making sure they all have @Component
+- Idea also warns about the multiple implementations in Tennis Coach fortuneService private field
 
 ###### S1 Section 8, Lecture 73 - Annotations - Default Bean Names (special case)
+**Annotations - Default Bean Names - The Special Case**
+- In general, when using Annotations, for default bean name, Spring uses the following rule. 
+- If the annotation value doesn't indicate a bean name, an appropriate name will be built based on the short name of the class (with the first letter lower-cased
+    - Eg: HappyFortuneService --> happyFortuneService
+- However, for ***special case of when BOTH the first and second characters are upper case, then the name is NOT converted***
+- For the case of RESTFortuneService
+    - Eg: RESTFortuneService --> RESTFortuneService
+    - No conversion since the frist characters are upper case
+- BTS, Spring uses the Java Beans Introspector to generate the default bean names. 
+- Screen shot of the documentation for the key method: ![decapitalize documentation]() 
+- Link to documentation: https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html#decapitalize(java.lang.String) 
+- As always, you can give explicity names to your beans.
+```java
+@Component("foo")
+public class RESTFortuneService .... {
+}
+```
+- Then you can access it using the name of "foo". 
 
 ###### S1 Section 8, Lecture 74 - Using @Quantifiers with Constructors - Overview
+**Using @Qualifier with Consturctors**
+
 
 ###### S1 Section 8, Lecture 75 - How to inject properties file using Java annotations
 
