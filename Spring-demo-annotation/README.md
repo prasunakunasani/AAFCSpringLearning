@@ -516,6 +516,46 @@ private String team;
     - As long as there is a @Component annotation to an implementation, it will go into the constructor of that class...
 
 ###### S1 Section 9, Lecture 77 - @Scope Annotation - Overview
+**Bean Scopes**
+- Scope refers to the lifecyle of a bean
+- How long does the bean live?
+- How many instances are created?
+- How is the bean shared?
+
+**Default Scope**
+- Default scope is singleton
+
+**Refresher: What is a Singleton?**
+- Spring Container creates only one instance of the bean, by default
+- It is cached in memory
+- All requests for the bean will return a SHARED reference to the SAME bean
+
+![What is a singleton](https://github.com/whereismybaymax/AAFCjavaJunitLearning/blob/master/Notes/Images/2018-07-20%2014_42_03-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
+- When the reference is returned for both, they give the same reference and point to the same area in memory
+
+**Explicity Specify Bean Scope**
+```java
+@Component
+@Scope("singleton")
+public class TennisCoach implements Coach {
+    ...
+}
+```
+- Use @Scope to specify the scope
+
+**Prototype Scope Example**
+- Prototype scope: new object for each request
+```java
+@Component
+@Scope("prototype")
+public class TennisCoach implements Coach {
+    ...
+}
+```
+![Prototype Scope Example](https://github.com/whereismybaymax/AAFCjavaJunitLearning/blob/master/Notes/Images/2018-07-20%2014_55_58-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
+- Everytime the tennisCoach bean is referenced, it creates a new object for each request
+- In this Eg, Coach theCoach is in one area of memeory and then Coach alphaCoach will create a new object 
+    - Two dif objects, two dif areas in memory
 
 ###### S1 Section 9, Lecture 78 - @Scope Annotation - Write Some Code
 
