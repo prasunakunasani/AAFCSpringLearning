@@ -9,9 +9,12 @@ public class AnnotationBeanScopeDemoApp {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
         //retrieve beans from Spring container
-        Coach theCoach = context.getBean("tennisCoach", Coach.class);
+        Coach theCoach = context.getBean("boxingCoach", Coach.class);
 
-        Coach alphaCoach = context.getBean("tennisCoach",Coach.class);
+        Coach alphaCoach = context.getBean("boxingCoach",Coach.class);
+
+        System.out.println(theCoach.getDailyWorkout());
+        System.out.println(theCoach.getDailyFortune());
 
         boolean result = theCoach == alphaCoach;
 

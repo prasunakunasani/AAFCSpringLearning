@@ -559,6 +559,7 @@ public class TennisCoach implements Coach {
 
 ###### S1 Section 9, Lecture 78 - @Scope Annotation - Write Some Code
 - Here: 
+- Lessons Learned: 
 - If Spring is creating multiple objects cause' you used @Scope("prototype"), the constructor will be called for each bean. 
     - So, two beans means calling constructor twice
 
@@ -637,10 +638,33 @@ The method can not accept any arguments. The method should be no-arg.
 Eclipse will perform a rebuild of your project and it will resolve the related build errors.
 
 ###### S1 Section 9, Lecture 82 - Bean Lifecycle Method Annotations - Write some code
+- Here: 
 
 ###### S1 Section 9, Lecture 83 - Note about Destroy Lifecycle and Prototype Scope
+- For "prototype" scoped beans, Spring does not call the @PreDestroy method.  Gasp!
+- Here is the answer from the Spring reference manual. Section 7.5.2: 
+    - https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-factory-scopes-prototype
+---
+- In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean:
+    - the container instantiates, configures, and otherwise assembles a prototype object, and hands it to the client, with no further record of that prototype instance. 
+- Thus, although initialization lifecycle callback methods are called on all objects regardless of scope, in the case of prototypes, configured destruction lifecycle callbacks are not called. 
+- The client code must clean up prototype-scoped objects and release expensive resources that the prototype bean(s) are holding. 
+- To get the Spring container to release resources held by prototype-scoped beans, try using a custom bean post-processor, which holds a reference to beans that need to be cleaned up.
+---
+- This also applies to XML configuration.
 
 ###### S1 Section 9, Lecture 84 - Practical Activity #6 - Bean Scopes with Annotations
+**Practice Activity #6 - Bean Scopes with Annotations**
+1) Modify your file based fortune service to make use of the @PostConstruct annotation
+2) In the @PostConstruct code, read the fortunes from the file system
+3) Test your application and verify your @PostConstruct code is being executed. Hint, add some println statements.
+
+Compare your code to the solution. The solution is available here:
+- http://www.luv2code.com/downloads/udemy-spring-hibernate/solution-practice-activities.zip
+
+Lessons Learned: 
+- You did the previous practical activity wrong. It meant to use a text file, not a properties file
+- The current answer to this is based on the solution that shows how to read a file like in C++ in stream and out stream
 
 ###### S1 Section 10, Lecture 85 - Spring Configuration with Java Code - Overview
 

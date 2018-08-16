@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
-//@Scope("singleton")
-@Scope("prototype")
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 public class TennisCoach implements Coach {
 
     private FortuneService fortuneService;
@@ -21,6 +21,20 @@ public class TennisCoach implements Coach {
 
     public TennisCoach() {
         System.out.println(">> TennisCoach: inside default constructor");
+    }
+
+
+    //define an init method
+    @PostConstruct
+    public void doMyStartUpStuff(){
+        System.out.println(">>TennisCoach: inside of doMyStartUpStuff");
+    }
+
+    //define an destroy method
+    @PreDestroy
+    public void doMyCleanUpStuff()
+    {
+        System.out.println(">>TennisCoach: inside of doMyCleanUpStuff");
     }
 
     /*
