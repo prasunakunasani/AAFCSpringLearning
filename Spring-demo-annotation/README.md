@@ -558,6 +558,9 @@ public class TennisCoach implements Coach {
     - Two dif objects, two dif areas in memory
 
 ###### S1 Section 9, Lecture 78 - @Scope Annotation - Write Some Code
+- Here: 
+- If Spring is creating multiple objects cause' you used @Scope("prototype"), the constructor will be called for each bean. 
+    - So, two beans means calling constructor twice
 
 ###### S1 Section 9, Lecture 79 - Bean Lifecycle Method Annotations - Overview
 
