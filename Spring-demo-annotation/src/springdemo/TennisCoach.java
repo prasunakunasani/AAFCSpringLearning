@@ -2,39 +2,38 @@ package springdemo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+@Component
 public class TennisCoach implements Coach {
 
     private FortuneService fortuneService;
 
-    /*
     @Autowired
-    public TennisCoach(FortuneService theFortuneService) {
+    public TennisCoach(@Qualifier("happyFortuneService") FortuneService theFortuneService) {
+        System.out.println(">> TennisCoach: inside constructor that sets FortuneService");
         fortuneService = theFortuneService;
     }
-*/
-
-    public TennisCoach() {
+   public TennisCoach() {
         System.out.println(">> TennisCoach: inside default constructor");
     }
-
 
     //define an init method
     @PostConstruct
     public void doMyStartUpStuff(){
-        System.out.println(">>TennisCoach: inside of doMyStartUpStuff");
+        System.out.println(">>TennisCoach: inside of doMyStartUpStuff()");
     }
 
     //define an destroy method
     @PreDestroy
     public void doMyCleanUpStuff()
     {
-        System.out.println(">>TennisCoach: inside of doMyCleanUpStuff");
+        System.out.println(">>TennisCoach: inside of doMyCleanUpStuff()");
     }
 
     /*

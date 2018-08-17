@@ -697,7 +697,7 @@ public class SportConfig{
 ```java
 @Configuration
 @ComponentScan("com.springdemo")
-public class SportConfig{
+public class SportConfig {
     
 }
 ```
@@ -717,6 +717,7 @@ Coach theCoach = context.getBean("tennisCoach", Coach.class)
 ``` 
 
 ###### S1 Section 10, Lecture 86 - Spring Configuration with Java Code - Write Some code
+
 
 ###### S1 Section 10, Lecture 87 - Defining Spring Beans with Java Code - Overview
 

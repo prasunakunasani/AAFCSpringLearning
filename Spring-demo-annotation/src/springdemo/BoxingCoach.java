@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Component
 public class BoxingCoach implements Coach {
 
     private FortuneService fortuneService;
 
-    @Autowired
-    public BoxingCoach(@Qualifier("fileFortuneService") FortuneService fortuneService) {
+        public BoxingCoach(FortuneService fortuneService) {
 
         System.out.println(">>BoxingCoach: inside default constructor");
 

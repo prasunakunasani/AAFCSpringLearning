@@ -12,7 +12,6 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
-@Component
 public class FileFortuneService implements FortuneService {
 
 	// private String fileName = "C:/foobar/fortune-data.txt";
