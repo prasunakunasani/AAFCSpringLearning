@@ -667,6 +667,54 @@ Lessons Learned:
 - The current answer to this is based on the solution that shows how to read a file like in C++ in stream and out stream
 
 ###### S1 Section 10, Lecture 85 - Spring Configuration with Java Code - Overview
+**Java Configuration**
+- Instead of configuring Spring container using XML
+- Configure the Spring Container with Java Code 
+    - No XML!
+    
+**3 Ways of Configuring Spring Container**
+
+- Gone through the first two
+- Full XML Config - where you list each bean in context file
+- XML Component Scan - using annotations
+- Next one will just be writing java source code to configure the container
+
+**Development Process**
+1) Create a Java class and annotate as ****@Configuration****
+2) Add component scanning support: ****@ComponentScan**** (optional)
+3) Read Spring Java configuration class
+4) Retrieve bean from Spring Container
+
+**Step 1: Create a Java class and annotate as @Configuration**
+```java
+@Configuration
+public class SportConfig{
+    ...
+}
+```
+
+**Step 2: Add component scanning support: @ComponentScan**
+```java
+@Configuration
+@ComponentScan("com.springdemo")
+public class SportConfig{
+    
+}
+```
+- can mannually add bean (will talk about it later) but for now, can use easy approach and do ComponentScan
+    - Tell spring to just scan the package for beans and register with container
+    
+**Step 3: Read Spring Java configuration class**
+```java
+AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SportConfig.class)
+```
+- here we simply read the configuration class we just created and give a reference to the Config we just gave
+- It will create the spring container based on the java source configuration and make context available for us
+
+**Step 4: Retreive bean from Spring container**
+```java
+Coach theCoach = context.getBean("tennisCoach", Coach.class)
+``` 
 
 ###### S1 Section 10, Lecture 86 - Spring Configuration with Java Code - Write Some code
 
