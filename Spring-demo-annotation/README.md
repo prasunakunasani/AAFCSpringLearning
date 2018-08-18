@@ -717,10 +717,127 @@ Coach theCoach = context.getBean("tennisCoach", Coach.class)
 ``` 
 
 ###### S1 Section 10, Lecture 86 - Spring Configuration with Java Code - Write Some code
-
+- Here: 
 
 ###### S1 Section 10, Lecture 87 - Defining Spring Beans with Java Code - Overview
+**Defining Beans in Spring**
+- Before used Full XML Config file
+- Now gonna use Java Configuration class to add beans 
 
+**Our New Coach**
+- No special annotations
+```java
+public class SwimCoach implements Coach{
+    ...
+}
+```
+- Coach will have FortuneService dependency injected
+
+**Development Process**
+1) Define method to expose bean
+2) Inject bean dependencies
+3) Read Spring Java configuration class
+4) Retrieve bean from Spring Container
+
+**Step1: Define method to expose bean**
+```java
+@Configuration
+public class SportConfig{
+    
+    @Bean
+    public Coach swimCoach() {
+        SwimCoach mySwimCoach = new SwimCoach(); 
+        return mySwimCoach; 
+    }
+}
+```
+- @Bean defines a bean. 
+- Here, we'll provide a method that returns SwimCoach 
+- Internally, inside this method, we create an instance of SwimCoach bean and return it
+- So, the method name is the actual beanid that'll be registered by the Spring Container
+- NOT using ComponentScan here
+    - In this configuration, we will define each bean individually in the configuration class
+
+**What about our dependcies**
+- How will we inject our dependcies cause' we know our Coach will need FortuneService
+
+**Step 2: Inject bean dependencies**
+```java
+@Configuration
+public class SportConfig{
+    
+    @Bean
+    public FortuneService happyFortuneService()
+    {
+        return new HappyFortuneService(); 
+    }
+    
+    @Bean
+    public Coach swimCoach() {
+        SwimCoach mySwimCoach = new SwimCoach(happyFortuneService()); 
+        return mySwimCoach; 
+    }
+}
+```
+**Step3: Read Spring Java configuration class**
+
+
+- creating an another method that returns a new instance of HappyFortuneService
+- Again, the bean method name is the bean id that Spring will use when it's registers the bean with the application Context
+- Then, can just use it later on in swimCoach
+    - using the bean reference at the top
+
+
+**Step 4: Read Spring Java configuration class**
+```java
+    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SportConfig.class);
+```
+**Step 4: Retreive bean from Spring container**
+```java
+    Coach theCoach = context.getBean("swimCoach", Coach.class)
+``` 
+- the bean id here is the actual method name from the config class
+
+
+**XML vs Java code Config, @Component vs @Bean**
+- this section exists cause' you are super confused as to why the advantages and disadvantages of these dif ones  
+****XML vs Java code Config****
+- In a nutshell:
+    - XML configs defines configs in a text file separate from source code. Changes to configs do not require recompiling source code.
+    - Annotation can make use of @ComponentScan to minimize explicit configs
+    - Java Code: hard-codes configuration in source code. Any change to configs requires recompiling source code.
+---
+- "Full Disclaimer: I personally prefer XML configs with @ComponentScan. I like to keep my configs separate from the source code."
+---
+- Here's a blog post on this topic. The author is in favor of hard-coding config information in the Java source code. Also, read the comments at the end of the blog post.
+    - https://blog.codecentric.de/en/2012/07/spring-dependency-injection-styles-why-i-love-java-based-configuration/
+****@Component vs @Bean****
+- https://stackoverflow.com/questions/10604298/spring-component-versus-bean 
+- @Component Preferable for component scanning and automatic wiring.
+- When should you use @Bean?
+    - Sometimes automatic configuration is not an option. 
+    - When? Let's imagine that you want to wire components from 3rd-party libraries (you don't have the source code so you can't annotate its classes with @Component)
+    - so automatic configuration is not possible.
+- The @Bean annotation returns an object that spring should register as bean in application context. The body of the method bears the logic responsible for creating the instance.
+- Another case: 
+    - Let's consider I want specific implementation depending on some dynamic state. @Bean is perfect for that case.
+        - However there is no way to do that with @Component.
+```java
+    @Bean
+    @Scope("prototype")
+    public SomeService someService() {
+        switch (state) {
+        case 1:
+            return new Impl1();
+        case 2:
+            return new Impl2();
+        case 3:
+            return new Impl3();
+        default:
+            return new Impl();
+        }
+    }
+```
 ###### S1 Section 10, Lecture 88,89 - Defining Spring Beans with Java Code - Write some code
 
 ###### S1 Section 10, Lecture 90 - Injecting Values from Properties File - Overview
