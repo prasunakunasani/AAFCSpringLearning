@@ -838,7 +838,10 @@ public class SportConfig{
         }
     }
 ```
+- todo - You seriously need to look more into the Q and A for this lecture to make sure you get a solid understanding of the uses, when to use, how to use, etc
 ###### S1 Section 10, Lecture 88,89 - Defining Spring Beans with Java Code - Write some code
+- this time, there are no annotations in SadFortuneService and SwimCoach
+- 
 
 ###### S1 Section 10, Lecture 90 - Injecting Values from Properties File - Overview
 
