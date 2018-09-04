@@ -6,6 +6,7 @@
     - Java annotations are simply meta data about the class
 - Processed at compile time or run-time for special processing
 - ![Boot metadata](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-07-25%2016_41_30-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
+
 **Annotation Example**
 - ![Annotations example](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-07-26%2015_09_53-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - The annotation here tells the compiler: "Hey, we're gonna implement the interface, extend the class and override the method exactly as listed in the interface or the parent class". 
@@ -13,7 +14,7 @@
     - as long as you override exactly as advertised, everything will work just fine
     - If there are problems, compiler will just give a compilation error
     
-**Why Spring Configuratio with Annotations?**
+**Why Spring Configuration with Annotations?**
 - XML configuration can be verbose
     - for large projects like 30 or 100 beans. Each would be have to be listed and it's a lot of work. So, instead, can: 
 - Configure your Spring beans with Annotations
@@ -84,7 +85,7 @@ Coach theCoach = context.getBean("thatSillyCoach", Coach.class)
 
 ###### S1 Section 7, Lecture 56 - Default Component Names - Overview
 - We already learned: 
-    1) Specify the bean id in the component annotation
+    - Specify the bean id in the component annotation
     ```java
       @Component("thatSillyCoach")
       public class TennisCoach implements Coach{...
@@ -110,8 +111,8 @@ Coach theCoach = context.getBean("tennisCoach",Coach.class);
 - just removed the manual bean id and changed the name of the retrieved bean id in AnnotationDemoApp.class
 
 ###### S1 Section 7, Lecture 58 - Practical Activity #4 - Inversion of Control with Annotations
-- Here: 
-Practice Activity #4 - Inversion of Control with Java Annotations
+- Here:   
+**Practice Activity #4 - Inversion of Control with Java Annotations**
 
 1) Define a new Coach implementation using Annotations
 2) Reference the new coach implementation in your main application.
@@ -126,7 +127,8 @@ Compare your code to the solution. The solution is available here:
 - Now will also provide daily fortunes
     - New Helper: FortuneService
     - This is a dependency
-    - ![Dependency](https://github.com/whereismybaymax/AAFCjavaJunitLearning/blob/master/Notes/Images/2018-04-11%2015_09_51-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
+    - ![Dependency](https://github.com/whereismybaymax/AAFCjavaJunitLearning/blob/master/Notes/Images/2018-04-11%2015_09_51-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)  
+
 **What is Spring AutoWiring**
 - For dependency injection, Spring can use auto wiring
     - autowires objects together
@@ -188,7 +190,7 @@ public class TennisCoach implements Coach{
 - Tennis Coach has a constructor with the same name as the class
 - We pass in the dependency and make a basic assignment
 
-**Step 3: Configure the dependency injection with @Autowired annotation
+**Step 3: Configure the dependency injection with @Autowired annotation**
 ```java
 //file: TennisCoach.java
 @Component
@@ -216,8 +218,7 @@ public class TennisCoach implements Coach{
     - We get the Coach object and it's FortuneService together cause' of Spring
 
 ###### S1 Section 8, Lecture 60 - FAQ - What if there are Multiple Implementations
-AUTOWIRING
-**FAQ: What if there are multiple FortuneService implementations?**
+**AUTOWIRING FAQ: What if there are multiple FortuneService implementations?**
 - As in, based on the above, Spring will scan for a component that implements FortuneService interface
 - In our example, we're setting it up so HappyFortuneService implements FortuneService. So, this meets are requirements
 - what is there are multiple components that implement FortuneService? Which one will Spring pick then?
@@ -228,7 +229,7 @@ AUTOWIRING
     - Spring has special support to handle this case. Use the @Qualifier annotation. 
 
 ###### S1 Section 8, Lecture 61, 62 - Constructor Injection - Write some code
-- Here: 
+- Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/92becc174dc8eb295436c6edc3cca808e93f23e1
 
 ###### S1 Section 8, Lecture 63 - FAQ - Constructor Injection - Autowired Optional? 
 - Question
@@ -349,7 +350,7 @@ public class TennisCoach implements Coach{
 - Spring will call the default constructor and inject a fortuneService implementation directly into the class using java's reflection
 
 ###### S1 Section 8, Lecture 68 - Field Injection - Write some code
-- Here: 
+- Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/a00b646a8199b8b5ddfd410380afabbd570254b5
 - Spring will inject the fortuneService, print out our daily workout and then print the happy fortune
     - the happy fortune is coming from fortuneService wired  
 
@@ -494,11 +495,15 @@ foo.team=Silly Java Coders
 ```
 3) Inject the properties values into your Swim Coach: SwimCoach.java
 ```java
-@Value("${foo.email}")
-private String email;
-    
-@Value("${foo.team}")
-private String team;
+@Component
+public class SwimCoach implements Coach {
+	...
+	@Value("${foo.email}")
+	private String email;
+	
+	@Value("${foo.team}")
+	private String team;
+	...
 ```
 - Can download entire code from here: http://www.luv2code.com/downloads/spring-hibernate/spring-props-annotation-demo.zip
 
@@ -558,7 +563,7 @@ public class TennisCoach implements Coach {
     - Two dif objects, two dif areas in memory
 
 ###### S1 Section 9, Lecture 78 - @Scope Annotation - Write Some Code
-- Here: 
+- Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/10758e889f617745dbad7ea6e129d3c4d61ebeff
 - Lessons Learned: 
 - If Spring is creating multiple objects cause' you used @Scope("prototype"), the constructor will be called for each bean. 
     - So, two beans means calling constructor twice
@@ -781,12 +786,10 @@ public class SportConfig{
 ```
 **Step3: Read Spring Java configuration class**
 
-
 - creating an another method that returns a new instance of HappyFortuneService
 - Again, the bean method name is the bean id that Spring will use when it's registers the bean with the application Context
 - Then, can just use it later on in swimCoach
     - using the bean reference at the top
-
 
 **Step 4: Read Spring Java configuration class**
 ```java
@@ -797,7 +800,6 @@ public class SportConfig{
     Coach theCoach = context.getBean("swimCoach", Coach.class)
 ``` 
 - the bean id here is the actual method name from the config class
-
 
 **XML vs Java code Config, @Component vs @Bean**
 - this section exists cause' you are super confused as to why the advantages and disadvantages of these dif ones  
@@ -841,11 +843,53 @@ public class SportConfig{
 - todo - You seriously need to look more into the Q and A for this lecture to make sure you get a solid understanding of the uses, when to use, how to use, etc
 ###### S1 Section 10, Lecture 88,89 - Defining Spring Beans with Java Code - Write some code
 - this time, there are no annotations in SadFortuneService and SwimCoach
-- 
+    - so no component scan 
 
 ###### S1 Section 10, Lecture 90 - Injecting Values from Properties File - Overview
+![Reading from properties file]()
+- the properties file has an e-mail and a team
+- we'll read info from this file and inject it into the SwimCoach
+
+**Development Process**
+1) Create Properties File
+2) Load Properties File in Spring config
+3) Reference values from Properties file
+
+**Step 1: Create Properties file**
+- sport.properties
+```properties
+foo.email=myeasycoach@luv2code.com
+foo.team=Awesome Java Coders
+```
+- foo.blah is the 'property name' and the right side values is the 'property value'
+
+**Step 2: Load Properties File in Spring config**
+```java
+@Configuration
+@PropertySource("classpath:sport.properties")
+public class SportConfig{
+    
+}
+```
+- give a reference to the @propertysource by saying that file is located in our classpath and then give name of properties file
+
+**Step 3: Reference Values from Properties File**
+```java
+//File: SwimCoach.java
+public class SwimCoach implements Coach {
+    @Value("${foo.email}")
+    private String email; 
+    
+    @Value ("${foo.team}")
+    private String team; 
+}
+```
+- what you're doing about is called 'field injection' to inject those values
+- the name of the property needs into be in a dollar sign curly brace format
+- later on, SwimCoach can use those values
 
 ###### S1 Section 10, Lecture 91, 92 - Injecting Values from Properties File - Write some code
+
 
 ###### S1 Section 10, Lecture 93 - FAQ - Problems with Injecting Values - Value not returning ${foo.e-mail}
 
