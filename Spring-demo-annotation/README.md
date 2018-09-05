@@ -134,7 +134,7 @@ Compare your code to the solution. The solution is available here:
     - autowires objects together
 - Spring will look for a class that matches a given property 
     - matches by type: class or interface
-- Once Spring finds a match, it will inject it automatically ...hence it is autowired
+- Once Spring finds a match, it will inject it automatically ...hence it is autowired  
 **Autowiring Example**
 - Injecting a FortuneService into a Coach implementation
 - Spring will scan all the @Components
@@ -221,7 +221,7 @@ public class TennisCoach implements Coach{
 **AUTOWIRING FAQ: What if there are multiple FortuneService implementations?**
 - As in, based on the above, Spring will scan for a component that implements FortuneService interface
 - In our example, we're setting it up so HappyFortuneService implements FortuneService. So, this meets are requirements
-- what is there are multiple components that implement FortuneService? Which one will Spring pick then?
+- what if there are multiple components that implement FortuneService? Which one will Spring pick then?
 - QUESTION
     - When using autowiring, what if there are multiple FortuneService implementations? Like in the image below?
     - ![Multiple FortuneService implementations](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-08-03%2012_07_34-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
@@ -361,13 +361,40 @@ public class TennisCoach implements Coach{
     - You'll end up getting the same functionality so..not really
     - Even in spring documentation, they say you get same functionality 
 - However, Field Injection gives a warning in Intellij: https://stackoverflow.com/questions/39890849/what-exactly-is-field-injection-and-how-to-avoid-it 
+    - For mandatory dependencies or when aiming for immutablity, use consturctor injection
+    - For optional or changeable dependencies, use setter injection
+    - Avoid field injection in most cases
+    - Spring documentation: https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#spring-core 
+****Constructor-based or setter-based DI? from Spring****
+```text
+- Since you can mix constructor-based and setter-based DI, it is a good rule of thumb to use constructors for mandatory dependencies and setter methods or configuration methods for optional dependencies. Note that use of the @Required annotation on a setter method can be used to make the property a required dependency.
+- The Spring team generally advocates constructor injection as it enables one to implement application components as immutable objects and to ensure that required dependencies are not null. Furthermore constructor-injected components are always returned to client (calling) code in a fully initialized state. As a side note, a large number of constructor arguments is a bad code smell, implying that the class likely has too many responsibilities and should be refactored to better address proper separation of concerns.
+- Setter injection should primarily only be used for optional dependencies that can be assigned reasonable default values within the class. Otherwise, not-null checks must be performed everywhere the code uses the dependency. One benefit of setter injection is that setter methods make objects of that class amenable to reconfiguration or re-injection later. Management through JMX MBeans is therefore a compelling use case for setter injection.
+- Use the DI style that makes the most sense for a particular class. Sometimes, when dealing with third-party classes for which you do not have the source, the choice is made for you. For example, if a third-party class does not expose any setter methods, then constructor injection may be the only available form of DI.
+```
+- Field injection drawbacks: 
+    -  You cannot create immutable objects, as you can with constructor injection
+    - Your classes have tight coupling with your DI container and cannot be used outside of it
+    - Your classes cannot be instantiated (for example in unit tests) without reflection. You need the DI container to instantiate them, which makes your tests more like integration tests
+    - Your real dependencies are hidden from the outside and are not reflected in your interface (either constructors or methods)
+    - It is really easy to have like ten dependencies. If you were using constructor injection, you would have a constructor with ten arguments, which would signal that something is fishy. But you can add injected fields using field injection indefinitely. Having too many dependencies is a red flag that the class usually does more than one thing, and that it may violate the Single Responsibility Principle.
+   
+**When to use setter injection over constructor injection**
+- ****Constructor Injection:**** We are injecting the dependencies through Constructor.
+- Generally we can use for ****Mandatory dependencies.****
+- If you use the Constructor injection there is one disadvantage called ****"Circular Dependency".****
+- ****Circular Dependency:**** Assume A and B. A is dependent on B. B is dependent on A. In this constructor injection will be failed. At that time Setter injection is useful.
+- If Object state is not inconsistent it won't create Object.
+- ****Setter Injection:**** We are injecting the dependencies through Setter methods.
+- This is useful for ****Non-Mandatory dependencies.****
+- It is possible to ****re injecting**** dependencies by using ****Setter Injection****. It is ****not possible**** in ****Constructor injection.****
 
 ###### S1 Section 8, Lecture 70 - Qualifiers for Dependency Injection - Overview
 - So far, using Autowiring where Spring scans for components to see if anyone is implementing the FortuneService interface
 - But what happens if there are multiple implementations out there? Which one will Spring pick? How will it know which one to pick? 
 - ![Multiple FortuneService implementations](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-08-03%2012_07_34-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - Spring will give an error message if there are multiple implementations:
-- ![Error messages]()
+- ![Error messages](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-08-15%2013_02_20-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - That there was a error that it was expecting a single implementation but found 4. And then it'll give all four
 - Solution..Need to tell Spring which bean to use
 **Solution: Be specific! - @Qualifier**
@@ -381,10 +408,10 @@ public class TennisCoach implements Coach{
     ... 
 }
 ```  
-- ![desired bean id]()
+- ![desired bean id](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-08-15%2013_05_48-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - Giving bean id of what we want to use
     - the bean id is just the default bean id 
-- In qualifier, you simply specify the bean id that you want to inject
+- In qualifier, you simply specify the bean id that you want to inject  
 **Injection Types**
 - Can apply @Qualifier annotation to: 
     - Constructor injection
@@ -406,7 +433,7 @@ public class TennisCoach implements Coach{
     - Eg: RESTFortuneService --> RESTFortuneService
     - No conversion since the frist characters are upper case
 - BTS, Spring uses the Java Beans Introspector to generate the default bean names. 
-- Screen shot of the documentation for the key method: ![decapitalize documentation]() 
+- Screen shot of the documentation for the key method: ![decapitalize documentation](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-08-15%2013_58_10-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png) 
 - Link to documentation: https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html#decapitalize(java.lang.String) 
 - As always, you can give explicity names to your beans.
 ```java
@@ -475,8 +502,26 @@ public class TennisCoach implements Coach {
 }
 ```
 - For detailed documentation on using @Qualified with Constructors, see this link in the Spring Reference Manual
-    - https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-autowired-annotation-qualifiers 
- - todo for pk: need to see how it's done with setters since field injection seems to be bad practice and constructor injection with qualifier looks scary
+    - https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#beans-autowired-annotation-qualifiers
+    - setter and method injection is done the same way as constructor injection: 
+```java
+public class MovieRecommender {
+
+    private MovieCatalog movieCatalog;
+
+    private CustomerPreferenceDao customerPreferenceDao;
+
+    @Autowired
+    public void prepare(@Qualifier("main")MovieCatalog movieCatalog,
+            CustomerPreferenceDao customerPreferenceDao) {
+        this.movieCatalog = movieCatalog;
+        this.customerPreferenceDao = customerPreferenceDao;
+    }
+
+    // ...
+}
+```
+todo - see how injection is done for multiple dependencies that need qualifiers. Just two Qualifiers?
 
 ###### S1 Section 8, Lecture 75 - How to inject properties file using Java annotations
 **FAQ: How to inject properties file using Java annotations**
@@ -516,10 +561,53 @@ public class SwimCoach implements Coach {
 2. Inject your new dependency into your Coach implementation
 3. Test your application to verify you are getting random fortunes based on your fortunes file.
 
+Solution: http://www.luv2code.com/downloads/udemy-spring-hibernate/solution-practice-activities.zip 
+
+- Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/acefcb7fdac6ec169a6e9c52ee3e3df0983b7a1d 
 - What you learned: 
     - In a properties file, you can just put multiple values using commas and use them for the array using the @Value annotation
     - As long as there is a @Component annotation to an implementation, it will go into the constructor of that class...
-
+---
+**FAQ: I'm getting null for the fortunes.**  
+QUESTION
+ - When I create an array of fortunes using this
+ - String[] data= {a,b,c,d,e};
+ - The array is always null. Why?
+ANSWER
+- The root cause is this is a Spring Bean Lifecycle issue.
+- When Spring creates the beans it follows this general process
+    1. Construct an instance of class
+    2. Inject dependencies
+    3. Set properties etc (@Value)
+- In your case, when you initialized the array using this code
+    - // create an array of strings
+    - private String[] data = { a, b, c, d, e };
+- The Spring Bean lifecycle was at step #1 above. It created an instance ... but during the assigment of the string array, the properties/fields for a, b, c, d, e haven't been set yet using @Value. That doesn't happen later until step #3.  So that's why you had null with the field assignment.
+- When you made mods to your code and moved the assignment into the getFortune() method, then by the time this method is invoked all steps 1-3 are already complete and it works as desired.
+---
+- For this use case, the recommended solution is to use the @PostConstruct annotation. This is called at the end of the bean lifecycle process. So all of steps 1-3 are already completed and then you can safely perform assignments. This is the best use case for making any custom assignments in your code.
+- Here's the updated code for your service. Make note of this section:
+```java
+  private String[] data;
+    
+    @PostConstruct
+    public void setupMyData() {
+        
+        data = new String[5];
+        
+        data[0] = a;
+        data[1] = b;
+        data[2] = c;
+        data[3] = d;
+        data[4] = e;
+        
+    }
+```
+---
+**NOTE: JAVA 9 USERS HEADS UP**  
+- If you are using Java 9 and want to make use of @PostConstruct annotation, then you'll need to add support for @PostConstruct. See this link for how to set it up.
+ - https://www.udemy.com/spring-hibernate-tutorial/learn/v4/t/lecture/9120288?start=0
+---
 ###### S1 Section 9, Lecture 77 - @Scope Annotation - Overview
 **Bean Scopes**
 - Scope refers to the lifecyle of a bean
@@ -561,6 +649,13 @@ public class TennisCoach implements Coach {
 - Everytime the tennisCoach bean is referenced, it creates a new object for each request
 - In this Eg, Coach theCoach is in one area of memeory and then Coach alphaCoach will create a new object 
     - Two dif objects, two dif areas in memory
+
+**When to use Prototpye scope**
+- https://stackoverflow.com/questions/21969044/when-to-use-spring-prototype-scope
+- when you need stateful beans {?} 
+- A good practice is to pass dependencies through the constructor. Therefore, you should never use scope prototype. Instead, you should use new or a singleton factory.
+- Imagine that you must build a real-time system for vehicle tracking, and you will have like 2.000.000 cars sharing information each 5 seconds, In the server side, you will work with two or more distinct group configurations, one for Cars and another one for Trucks. With this simple scenario, if you design your application to work with distinct configuration groups in memory you will achieve more performance.
+- So, in this case when the server receives a new message from a Truck for example the server will get the configuration in memory, from a class VehicleGrupConfiguration and then apply which behavior this message should be, like time-out, retry... of course there are many ways to implement this situation, but with this simple example you can realize good scenarios to handle this configuration.
 
 ###### S1 Section 9, Lecture 78 - @Scope Annotation - Write Some Code
 - Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/10758e889f617745dbad7ea6e129d3c4d61ebeff
@@ -812,7 +907,45 @@ public class SportConfig{
 - "Full Disclaimer: I personally prefer XML configs with @ComponentScan. I like to keep my configs separate from the source code."
 ---
 - Here's a blog post on this topic. The author is in favor of hard-coding config information in the Java source code. Also, read the comments at the end of the blog post.
-    - https://blog.codecentric.de/en/2012/07/spring-dependency-injection-styles-why-i-love-java-based-configuration/
+- Warning: It's from 2012...You only understoon until the Patterns section
+- https://blog.codecentric.de/en/2012/07/spring-dependency-injection-styles-why-i-love-java-based-configuration/
+    - Disadvantages with XML
+        - can't get erros before starting ApplicationContext
+        - verbose so the configuration files get big, need to split them
+        - can't easily search through split xmls, need to rely on full-text-search
+        - To build up libraries, it's hard to find XML configuration files in jars on the classpath and even harder to detect references in those files. 
+        - these might be less drastic if you use the right tools
+    - Navigable configurations: Can connect configurations.
+        - dif configuration files can have responsiblity for different components
+        - By importing, all Spring beans from one config file are available in the other.   
+        - Eg: 
+```java
+@Configuration
+public class PartnerConfig {
+ 
+	@Bean
+	public PartnerService partnerService() {
+		return new PartnerServiceImpl();
+	}
+ 
+}
+```
+---
+```java
+@Configuration
+@Import(PartnerConfig.class)
+public class CashingConfig {
+ 
+	@Autowired
+	private PartnerConfig partnerConfig;
+ 
+	@Bean
+	public CashingService cashingService() {
+		return new CashingServiceImpl(partnerConfig.partnerService());
+	}
+}
+```
+   
 ****@Component vs @Bean****
 - https://stackoverflow.com/questions/10604298/spring-component-versus-bean 
 - @Component Preferable for component scanning and automatic wiring.
@@ -840,6 +973,7 @@ public class SportConfig{
         }
     }
 ```
+- todo - see if it's possible to do java config with component scan annotation and then assign @component to the classes you want as beans. 
 - todo - You seriously need to look more into the Q and A for this lecture to make sure you get a solid understanding of the uses, when to use, how to use, etc
 ###### S1 Section 10, Lecture 88,89 - Defining Spring Beans with Java Code - Write some code
 - this time, there are no annotations in SadFortuneService and SwimCoach
@@ -889,11 +1023,61 @@ public class SwimCoach implements Coach {
 - later on, SwimCoach can use those values
 
 ###### S1 Section 10, Lecture 91, 92 - Injecting Values from Properties File - Write some code
-
+- add properties in 'src' directory, not the package
+- in SwimJavaConfigDemoApp.java, changed from using the Coach interface to SwimCoach because SwimCoach has new menthods that Coach doesn't. 
 
 ###### S1 Section 10, Lecture 93 - FAQ - Problems with Injecting Values - Value not returning ${foo.e-mail}
+QUESTION: 
+I am running the code for Java Configuration and injecting values from props file. However, I'm getting:
+    ${foo.email}
+    ${foo.team}
+Instead of the actual property values. How can I resolve this?
+
+ANSWER: 
+This is an issue with Spring versions.
+If you are using Spring 4.2 and lower, you will need to add the code in ///.
+---
+```text
+package com.luv2code.springdemo;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+
+@Configuration
+// @ComponentScan("com.luv2code.springdemo")
+@PropertySource("classpath:sport.properties")
+public class SportConfig {
+
+/////////////////////    
+    // add support to resolve ${...} properties
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer
+                    propertySourcesPlaceHolderConfigurer() {
+        
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+///////////////////////    
+    // define bean for our sad fortune service
+    @Bean
+    public FortuneService sadFortuneService() {
+        return new SadFortuneService();
+    }
+    
+    // define bean for our swim coach AND inject dependency
+    @Bean
+    public Coach swimCoach() {
+        SwimCoach mySwimCoach = new SwimCoach(sadFortuneService());
+        
+        return mySwimCoach;
+    }
+}
+```
+In Spring 4.3 and higher, they removed this requirement. As a result, you don't need this code.
 
 ###### S1 Section 10, Lecture 94 - Practice Activity #7 - IoC and DI with Java Configuration
+
 
 ###### S1 Section 11, Lecture 95 - Spring MVC Overview
 
