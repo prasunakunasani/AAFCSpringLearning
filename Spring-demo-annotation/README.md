@@ -1077,8 +1077,18 @@ public class SportConfig {
 In Spring 4.3 and higher, they removed this requirement. As a result, you don't need this code.
 
 ###### S1 Section 10, Lecture 94 - Practice Activity #7 - IoC and DI with Java Configuration
+****Practice Activity #7 - Inversion of Control and Dependency Injection with Java Code****
+- Here: 
+- Note: In this practice activity, do not use component scanning.
+1) Create a new Coach implementation.
+2) Create a new fortune service implementation (return a single hard-coded fortune)
+3) Create a Java configuration class to perform IoC and DI with those classes.
+4) Develop a main application to retrieve your coach implementation.
+5) Test your application and verify your coach implementation is wired up as desired.
+-  The solution is available here:
+  - http://www.luv2code.com/downloads/udemy-spring-hibernate/solution-practice-activities.zip
 
-
+  
 ###### S1 Section 11, Lecture 95 - Spring MVC Overview
 
 ###### S1 Section 11, Lecture 96 - Spring MVC - Behind the Scenes
