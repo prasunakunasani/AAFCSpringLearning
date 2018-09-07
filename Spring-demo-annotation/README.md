@@ -1088,8 +1088,27 @@ In Spring 4.3 and higher, they removed this requirement. As a result, you don't 
 -  The solution is available here:
   - http://www.luv2code.com/downloads/udemy-spring-hibernate/solution-practice-activities.zip
 
-  
 ###### S1 Section 11, Lecture 95 - Spring MVC Overview
+**What is Spring MVC**
+- Framework for building web applications in Java
+- Based on Model-View-Controller design pattern
+- Leverages features of the Core Sprring Framework (IoC, DI)
+![MVC]()
+- Basically have an incoming request from the browser that will encounter Spring MVC front controller. 
+- This will delelate the request to controller code. You basically create the model and send the model to the front controller. 
+- The controller contains the business logic. The controller will pass the model to the view template. 
+- The view template is like a html page that will render the response to the browser
+
+**Spring MVC Benefits**
+- The Spring way of building web apps UIs in Java
+- Leverage a set of reusable UI components - available as spring jsp customer tags
+- Help manage application state for web requests
+- Process from data: validation, conversion, etc
+- Flexible configuration for the view layer so not limited to jsp 
+
+Spring documentation: https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc 
+
+
 
 ###### S1 Section 11, Lecture 96 - Spring MVC - Behind the Scenes
 
