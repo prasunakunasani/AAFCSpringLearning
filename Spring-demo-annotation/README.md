@@ -980,7 +980,7 @@ public class CashingConfig {
     - so no component scan 
 
 ###### S1 Section 10, Lecture 90 - Injecting Values from Properties File - Overview
-![Reading from properties file]()
+![Reading from properties file](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-08-20%2016_22_37-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - the properties file has an e-mail and a team
 - we'll read info from this file and inject it into the SwimCoach
 
