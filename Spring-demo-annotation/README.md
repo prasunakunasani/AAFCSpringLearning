@@ -1027,16 +1027,16 @@ public class SwimCoach implements Coach {
 - in SwimJavaConfigDemoApp.java, changed from using the Coach interface to SwimCoach because SwimCoach has new menthods that Coach doesn't. 
 
 ###### S1 Section 10, Lecture 93 - FAQ - Problems with Injecting Values - Value not returning ${foo.e-mail}
-QUESTION: 
+QUESTION:
+
 I am running the code for Java Configuration and injecting values from props file. However, I'm getting:
-    ${foo.email}
-    ${foo.team}
+    ${foo.email}  
+    ${foo.team}  
 Instead of the actual property values. How can I resolve this?
 
 ANSWER: 
 This is an issue with Spring versions.
 If you are using Spring 4.2 and lower, you will need to add the code in ///.
----
 ```text
 package com.luv2code.springdemo;
 
@@ -1093,7 +1093,8 @@ In Spring 4.3 and higher, they removed this requirement. As a result, you don't 
 - Framework for building web applications in Java
 - Based on Model-View-Controller design pattern
 - Leverages features of the Core Sprring Framework (IoC, DI)
-![MVC]()
+
+![MVC](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-09-05%2015_53_37-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - Basically have an incoming request from the browser that will encounter Spring MVC front controller. 
 - This will delelate the request to controller code. You basically create the model and send the model to the front controller. 
 - The controller contains the business logic. The controller will pass the model to the view template. 
