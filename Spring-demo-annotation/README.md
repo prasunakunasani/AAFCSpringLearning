@@ -10,7 +10,7 @@
 **Annotation Example**
 - ![Annotations example](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-07-26%2015_09_53-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - The annotation here tells the compiler: "Hey, we're gonna implement the interface, extend the class and override the method exactly as listed in the interface or the parent class". 
-- Compiler will check class and make sure you are actually overiding the method
+- Compiler will check class and make sure you are actually overriding the method
     - as long as you override exactly as advertised, everything will work just fine
     - If there are problems, compiler will just give a compilation error
     
@@ -74,7 +74,7 @@ Coach theCoach = context.getBean("thatSillyCoach", Coach.class)
 - in the future to add more jars specific to Spring MVC, can just try to add a module with those specific jars, copy the jars over and then delete the temp module
 
 ###### S1 Section 7, Lecture 54,55 - Explicit Component Names - Write some code
-- Here: 
+- Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/37d9858eb35002b65b68b3eccf4e15fef0a391f3
 - Create a new xml file: 
     - Right click src folder, New->XML Configuration File->Spring config->just write the name 'applicationContext' or something
     - configure it when Idea prompts you to
@@ -107,11 +107,10 @@ Coach theCoach = context.getBean("tennisCoach",Coach.class);
     - here, we are using the default bean id tennisCoach. 
 
 ###### S1 Section 7, Lecture 57 - Default Component Names - Write some code
-- Here: 
 - just removed the manual bean id and changed the name of the retrieved bean id in AnnotationDemoApp.class
 
 ###### S1 Section 7, Lecture 58 - Practical Activity #4 - Inversion of Control with Annotations
-- Here:   
+- Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/c00e7cfc5c7af6fb9f9d2171e783b81c5bc05b8a  
 **Practice Activity #4 - Inversion of Control with Java Annotations**
 
 1) Define a new Coach implementation using Annotations
@@ -206,7 +205,7 @@ public class TennisCoach implements Coach{
 ```
 - At the constructor, we have @Autowired
     - For the parameter being pass (theFortuneService), we want Spring to automatically wire up with component
-    - Instead of doing it long hand using XMLconfig, we are making use of this @Autowired annotation
+    - Instead of doing it long hand using XML config, we are making use of this @Autowired annotation
 - In the background, Spring realizes that it needs to satisfy this dependency
     - Spring will find a bean that implements FortuneService
 - Meaning, Spring will scan all the components, find the component, implements this FortuneService interface (HappyFortuneService), take that bean, inject it (autowire) here into the tennis coach
@@ -301,7 +300,7 @@ public class TennisCoach implements Coach {
 - we set the Autowired annotation so Spring will make it available for dependency injection
 
 ###### S1 Section 8, Lecture 65 - Setter Injection - Write some code
-Here: 
+Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/a00b646a8199b8b5ddfd410380afabbd570254b5
 
 ###### S1 Section 8, Lecture 66 - Method Injection
 - Can inject dependencies by calling ANY method on your class
@@ -345,8 +344,8 @@ public class TennisCoach implements Coach{
     // no need for setter method
 }
 ```
-- here, instead of using contructor injection or setter injection, we place it directly on the field
-    - BTS, Spring will set this field and create the object using Java technonology called reflection
+- here, instead of using constructor injection or setter injection, we place it directly on the field
+    - BTS, Spring will set this field and create the object using Java technology called reflection
 - Spring will call the default constructor and inject a fortuneService implementation directly into the class using java's reflection
 
 ###### S1 Section 8, Lecture 68 - Field Injection - Write some code
@@ -355,13 +354,13 @@ public class TennisCoach implements Coach{
     - the happy fortune is coming from fortuneService wired  
 
 ###### S1 Section 8, Lecture 69 - Which Injection Type Should You Use?
-- We covered Consturctor Injection, Setter Injection and Field injection 
+- We covered Constructor Injection, Setter Injection and Field injection 
 - Choose a style and stay consistent in your project
 - Is one better than the other? 
     - You'll end up getting the same functionality so..not really
     - Even in spring documentation, they say you get same functionality 
 - However, Field Injection gives a warning in Intellij: https://stackoverflow.com/questions/39890849/what-exactly-is-field-injection-and-how-to-avoid-it 
-    - For mandatory dependencies or when aiming for immutablity, use consturctor injection
+    - For mandatory dependencies or when aiming for immutability, use constructor injection
     - For optional or changeable dependencies, use setter injection
     - Avoid field injection in most cases
     - Spring documentation: https://docs.spring.io/spring/docs/5.0.8.RELEASE/spring-framework-reference/core.html#spring-core 
@@ -373,7 +372,7 @@ public class TennisCoach implements Coach{
 - Use the DI style that makes the most sense for a particular class. Sometimes, when dealing with third-party classes for which you do not have the source, the choice is made for you. For example, if a third-party class does not expose any setter methods, then constructor injection may be the only available form of DI.
 ```
 - Field injection drawbacks: 
-    -  You cannot create immutable objects, as you can with constructor injection
+    - You cannot create immutable objects, as you can with constructor injection
     - Your classes have tight coupling with your DI container and cannot be used outside of it
     - Your classes cannot be instantiated (for example in unit tests) without reflection. You need the DI container to instantiate them, which makes your tests more like integration tests
     - Your real dependencies are hidden from the outside and are not reflected in your interface (either constructors or methods)
@@ -431,11 +430,11 @@ public class TennisCoach implements Coach{
 - However, for ***special case of when BOTH the first and second characters are upper case, then the name is NOT converted***
 - For the case of RESTFortuneService
     - Eg: RESTFortuneService --> RESTFortuneService
-    - No conversion since the frist characters are upper case
+    - No conversion since the first characters are upper case
 - BTS, Spring uses the Java Beans Introspector to generate the default bean names. 
 - Screen shot of the documentation for the key method: ![decapitalize documentation](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-08-15%2013_58_10-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png) 
 - Link to documentation: https://docs.oracle.com/javase/8/docs/api/java/beans/Introspector.html#decapitalize(java.lang.String) 
-- As always, you can give explicity names to your beans.
+- As always, you can give explicit names to your beans.
 ```java
 @Component("foo")
 public class RESTFortuneService .... {
@@ -444,7 +443,7 @@ public class RESTFortuneService .... {
 - Then you can access it using the name of "foo". 
 
 ###### S1 Section 8, Lecture 74 - Using @Qualifier with Constructors - Overview
-**Using @Qualifier with Consturctors**
+**Using @Qualifier with Constructors**
 - @Qualifier is a nice feature, but it is tricky when used with Constructors.
 - The syntax is much different from other examples and not exactly intuitive.  Consider this the "deep end of the pool" when it comes to Spring configuration
 - You have to place the @Qualifier annotation inside of the constructor arguments. 
@@ -525,7 +524,7 @@ todo - see how injection is done for multiple dependencies that need qualifiers.
 
 ###### S1 Section 8, Lecture 75 - How to inject properties file using Java annotations
 **FAQ: How to inject properties file using Java annotations**
-- This solution will show you how inject values from a properties file using annotatons. The values will no longer be hard coded in the Java code. 
+- This solution will show you how inject values from a properties file using annotations. The values will no longer be hard coded in the Java code. 
 1) Create a properties file to hold your properties. It will be a name value pair. 
     - New text file:  src/sport.properties
 ```properties
@@ -582,7 +581,7 @@ ANSWER
 - In your case, when you initialized the array using this code
     - // create an array of strings
     - private String[] data = { a, b, c, d, e };
-- The Spring Bean lifecycle was at step #1 above. It created an instance ... but during the assigment of the string array, the properties/fields for a, b, c, d, e haven't been set yet using @Value. That doesn't happen later until step #3.  So that's why you had null with the field assignment.
+- The Spring Bean lifecycle was at step #1 above. It created an instance ... but during the assignment of the string array, the properties/fields for a, b, c, d, e haven't been set yet using @Value. That doesn't happen later until step #3.  So that's why you had null with the field assignment.
 - When you made mods to your code and moved the assignment into the getFortune() method, then by the time this method is invoked all steps 1-3 are already complete and it works as desired.
 ---
 - For this use case, the recommended solution is to use the @PostConstruct annotation. This is called at the end of the bean lifecycle process. So all of steps 1-3 are already completed and then you can safely perform assignments. This is the best use case for making any custom assignments in your code.
@@ -610,7 +609,7 @@ ANSWER
 ---
 ###### S1 Section 9, Lecture 77 - @Scope Annotation - Overview
 **Bean Scopes**
-- Scope refers to the lifecyle of a bean
+- Scope refers to the lifecycle of a bean
 - How long does the bean live?
 - How many instances are created?
 - How is the bean shared?
@@ -626,7 +625,7 @@ ANSWER
 ![What is a singleton](https://github.com/whereismybaymax/AAFCjavaJunitLearning/blob/master/Notes/Images/2018-07-20%2014_42_03-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - When the reference is returned for both, they give the same reference and point to the same area in memory
 
-**Explicity Specify Bean Scope**
+**Explicitly Specify Bean Scope**
 ```java
 @Component
 @Scope("singleton")
@@ -646,16 +645,16 @@ public class TennisCoach implements Coach {
 }
 ```
 ![Prototype Scope Example](https://github.com/whereismybaymax/AAFCjavaJunitLearning/blob/master/Notes/Images/2018-07-20%2014_55_58-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
-- Everytime the tennisCoach bean is referenced, it creates a new object for each request
-- In this Eg, Coach theCoach is in one area of memeory and then Coach alphaCoach will create a new object 
+- Every time the tennisCoach bean is referenced, it creates a new object for each request
+- In this Eg, Coach theCoach is in one area of memory and then Coach alphaCoach will create a new object 
     - Two dif objects, two dif areas in memory
 
-**When to use Prototpye scope**
+**When to use Prototype scope**
 - https://stackoverflow.com/questions/21969044/when-to-use-spring-prototype-scope
 - when you need stateful beans {?} 
 - A good practice is to pass dependencies through the constructor. Therefore, you should never use scope prototype. Instead, you should use new or a singleton factory.
 - Imagine that you must build a real-time system for vehicle tracking, and you will have like 2.000.000 cars sharing information each 5 seconds, In the server side, you will work with two or more distinct group configurations, one for Cars and another one for Trucks. With this simple scenario, if you design your application to work with distinct configuration groups in memory you will achieve more performance.
-- So, in this case when the server receives a new message from a Truck for example the server will get the configuration in memory, from a class VehicleGrupConfiguration and then apply which behavior this message should be, like time-out, retry... of course there are many ways to implement this situation, but with this simple example you can realize good scenarios to handle this configuration.
+- So, in this case when the server receives a new message from a Truck for example the server will get the configuration in memory, from a class VehicleGroupConfiguration and then apply which behavior this message should be, like time-out, retry... of course there are many ways to implement this situation, but with this simple example you can realize good scenarios to handle this configuration.
 
 ###### S1 Section 9, Lecture 78 - @Scope Annotation - Write Some Code
 - Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/10758e889f617745dbad7ea6e129d3c4d61ebeff
@@ -664,7 +663,7 @@ public class TennisCoach implements Coach {
     - So, two beans means calling constructor twice
 
 ###### S1 Section 9, Lecture 79 - Bean Lifecycle Method Annotations - Overview
-**Bean Lifecyle Methods/Hooks**
+**Bean Lifecycle Methods/Hooks**
 - You can add custom code during ****bean initialization****
     - Calling custom business logic methods
     - Setting up handles to resources (db, sockets, file, etc)
@@ -700,7 +699,7 @@ public class TennisCoach implements Coach{
 
 ###### S1 Section 9, Lecture 80 - Note about @PostConstruct and @PreDestroy Method Signatures
 **Special Note about @PostConstruct and @PreDestroy Method Signatures**
-- The method refering below is the method where you'll use the annotations
+- The method referring below is the method where you'll use the annotations
 
 ****Access modifier****  
 The method can have any access modifier (public, protected, private)
@@ -738,7 +737,6 @@ The method can not accept any arguments. The method should be no-arg.
 Eclipse will perform a rebuild of your project and it will resolve the related build errors.
 
 ###### S1 Section 9, Lecture 82 - Bean Lifecycle Method Annotations - Write some code
-- Here: 
 
 ###### S1 Section 9, Lecture 83 - Note about Destroy Lifecycle and Prototype Scope
 - For "prototype" scoped beans, Spring does not call the @PreDestroy method.  Gasp!
@@ -754,6 +752,7 @@ Eclipse will perform a rebuild of your project and it will resolve the related b
 - This also applies to XML configuration.
 
 ###### S1 Section 9, Lecture 84 - Practical Activity #6 - Bean Scopes with Annotations
+- Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/f44de3cb6a4bee70d6639865eb1971b6ed3a3c23
 **Practice Activity #6 - Bean Scopes with Annotations**
 1) Modify your file based fortune service to make use of the @PostConstruct annotation
 2) In the @PostConstruct code, read the fortunes from the file system
@@ -801,7 +800,7 @@ public class SportConfig {
     
 }
 ```
-- can mannually add bean (will talk about it later) but for now, can use easy approach and do ComponentScan
+- can manually add bean (will talk about it later) but for now, can use easy approach and do ComponentScan
     - Tell spring to just scan the package for beans and register with container
     
 **Step 3: Read Spring Java configuration class**
@@ -811,13 +810,13 @@ AnnotationConfigApplicationContext context = new AnnotationConfigApplicationCont
 - here we simply read the configuration class we just created and give a reference to the Config we just gave
 - It will create the spring container based on the java source configuration and make context available for us
 
-**Step 4: Retreive bean from Spring container**
+**Step 4: Retrieve bean from Spring container**
 ```java
 Coach theCoach = context.getBean("tennisCoach", Coach.class)
 ``` 
 
 ###### S1 Section 10, Lecture 86 - Spring Configuration with Java Code - Write Some code
-- Here: 
+- Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/814bc37d8fa59e5bc83983bd55d54c6ba50e36ac 
 
 ###### S1 Section 10, Lecture 87 - Defining Spring Beans with Java Code - Overview
 **Defining Beans in Spring**
@@ -858,8 +857,8 @@ public class SportConfig{
 - NOT using ComponentScan here
     - In this configuration, we will define each bean individually in the configuration class
 
-**What about our dependcies**
-- How will we inject our dependcies cause' we know our Coach will need FortuneService
+**What about our dependencies**
+- How will we inject our dependencies cause' we know our Coach will need FortuneService
 
 **Step 2: Inject bean dependencies**
 ```java
@@ -907,16 +906,16 @@ public class SportConfig{
 - "Full Disclaimer: I personally prefer XML configs with @ComponentScan. I like to keep my configs separate from the source code."
 ---
 - Here's a blog post on this topic. The author is in favor of hard-coding config information in the Java source code. Also, read the comments at the end of the blog post.
-- Warning: It's from 2012...You only understoon until the Patterns section
+- Warning: It's from 2012...You only understood until the Patterns section
 - https://blog.codecentric.de/en/2012/07/spring-dependency-injection-styles-why-i-love-java-based-configuration/
     - Disadvantages with XML
-        - can't get erros before starting ApplicationContext
+        - can't get errors before starting ApplicationContext
         - verbose so the configuration files get big, need to split them
-        - can't easily search through split xmls, need to rely on full-text-search
+        - can't easily search through split XMLs, need to rely on full-text-search
         - To build up libraries, it's hard to find XML configuration files in jars on the classpath and even harder to detect references in those files. 
         - these might be less drastic if you use the right tools
     - Navigable configurations: Can connect configurations.
-        - dif configuration files can have responsiblity for different components
+        - dif configuration files can have responsibility for different components
         - By importing, all Spring beans from one config file are available in the other.   
         - Eg: 
 ```java
@@ -1023,6 +1022,7 @@ public class SwimCoach implements Coach {
 - later on, SwimCoach can use those values
 
 ###### S1 Section 10, Lecture 91, 92 - Injecting Values from Properties File - Write some code
+- Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/360de022c480d783efdf207d0f6e9b82e6e56aea
 - add properties in 'src' directory, not the package
 - in SwimJavaConfigDemoApp.java, changed from using the Coach interface to SwimCoach because SwimCoach has new menthods that Coach doesn't. 
 
@@ -1078,7 +1078,7 @@ In Spring 4.3 and higher, they removed this requirement. As a result, you don't 
 
 ###### S1 Section 10, Lecture 94 - Practice Activity #7 - IoC and DI with Java Configuration
 ****Practice Activity #7 - Inversion of Control and Dependency Injection with Java Code****
-- Here: 
+- Here: https://github.com/whereismybaymax/AAFCSpringLearning/commit/1d8e5a1b6a70f5a9d3c8c16ff7aa9367f686fa06 
 - Note: In this practice activity, do not use component scanning.
 1) Create a new Coach implementation.
 2) Create a new fortune service implementation (return a single hard-coded fortune)
@@ -1092,7 +1092,7 @@ In Spring 4.3 and higher, they removed this requirement. As a result, you don't 
 **What is Spring MVC**
 - Framework for building web applications in Java
 - Based on Model-View-Controller design pattern
-- Leverages features of the Core Sprring Framework (IoC, DI)
+- Leverages features of the Core Spring Framework (IoC, DI)
 
 ![MVC](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-09-05%2015_53_37-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - Basically have an incoming request from the browser that will encounter Spring MVC front controller. 
@@ -1108,8 +1108,6 @@ In Spring 4.3 and higher, they removed this requirement. As a result, you don't 
 - Flexible configuration for the view layer so not limited to jsp 
 
 Spring documentation: https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc 
-
-
 
 ###### S1 Section 11, Lecture 96 - Spring MVC - Behind the Scenes
 
