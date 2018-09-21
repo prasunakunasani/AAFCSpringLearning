@@ -1096,7 +1096,7 @@ In Spring 4.3 and higher, they removed this requirement. As a result, you don't 
 
 ![MVC](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-09-05%2015_53_37-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 - Basically have an incoming request from the browser that will encounter Spring MVC front controller. 
-- This will delelate the request to controller code. You basically create the model and send the model to the front controller. 
+- This will delegate the request to controller code. You basically create the model and send the model to the front controller. 
 - The controller contains the business logic. The controller will pass the model to the view template. 
 - The view template is like a html page that will render the response to the browser
 
@@ -1110,10 +1110,93 @@ In Spring 4.3 and higher, they removed this requirement. As a result, you don't 
 Spring documentation: https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc 
 
 ###### S1 Section 11, Lecture 96 - Spring MVC - Behind the Scenes
+**Components of a Spring MVC Applications**
+- A set of ****web pages**** to layout UI components
+- A collection of spring ****beans**** (controllers, services, etc)
+- ****Spring configuration**** (XML, Annotations or Java)
+
+**How Spring MVC Works behind the scenes**
+![FrontController]()
+
+- Front controller is also known as ****DispatcherServlet****
+    - It's part of the Spring Framework
+    - Already developed by Spring Dev Team
+    - So, you dont' have to create this. It's given in the Spring jar files and out of the box
+    - Front controller will delegate the request to other objects or items in our system
+    
+- As a developer, You will create: 
+    - ****M****odel objects (orange)
+        - contain data
+    - ****V****iew templates (dark green)
+        - actual jsp page (view page to render data)
+    - ****C****ontroller classes (yellow)
+        - business logic or processing logic
+    
+**Controller**
+- When the front controller has a request, it delegates the request to a controller
+- the controller is the code created by developer
+- Contains your business logic
+    - Handle the request (Eg- read form data)
+    - Store/retrieve data (db, web service...)
+    - Once you have data and are using it, can place data in model
+        - the model is just a container for data and then
+    - Send to appropriate view template
+
+**Model**
+- Model: contains your data
+- Store/retrieve data via backend systems
+    - database, web service, etc...
+    - Use a spring bean if you like
+- Place your data in the model
+    - Data can be any Java object/collection
+- when controller does an operation to retrieve data from an backend system, you can take that data and place it into the model
+- Model is basically your container (box,luggage,suitcase,whatever, not technical term) for shipping data between various part of your Sping MVC application
+- model data will get passed over to the view template and they can handle that for displaying the data. 
+
+**View**
+- Spring MVC is flexible
+    - Supports many view templates
+- For now, most common is JSP + JSTL
+- model data comes over to your view template and then jsp page can read that model data and display it
+- Developer creates a page
+     - Displays data 
+- View is basically a jsp page that will provide data to the user
+- Eg - Say we have a list of students or products, jsp can create a table to display that product/student list
+    - else if somebody is signing up for a class/airline flight, view template/page can give a confirmation like 'hey, you're register for class' 
+
+**View Template (more)**
+- Other view templates supported
+    - Thymeleaf, Groovy
+    - Velocity, Freemarker, etc
+- For details, see: 
+    - www.luv2code.com/spring-mvc-views
 
 ###### S1 Section 11, Lecture 97 - Development Environment Checkpoint
 
+**Dev Environment Check Point**
+
+At this point, you should have installed: 
+- Apache Tomcat
+- Eclipse (Java EE version) (intelij idea in your case)
+- Connected Eclipse to Tomcat
+
+- this needs to be setup and configured (if not done, go to Section 3 and do it)
+    - you somehow managed to get this far without doing this and just working in Intellij so something is working...
+    
+**Additional things to do**
+
+- Download Spring MVC source code for upcoming stuff
+- Download latest Spring JAR files from Spring website
+
+**Download Spring MVC Starter files**
+- For upcoming sections: 
+    - From: http://www.luv2code.com/downloads/udemy-spring-hibernate/solution-code-spring-mvc-config-files.zip
+- Note from before: 
+    - in the future to add more jars specific to Spring MVC, can just try to add a module with those specific jars, copy the jars over and then delete the temp module
+
 ###### S1 Section 11, Lecture 98,99 - Spring MVC Configuration - Overview
+
+
 
 ###### S1 Section 11, Lecture 100 - Spring MVC Configuration - JAR files
 
