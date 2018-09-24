@@ -1116,7 +1116,7 @@ Spring documentation: https://docs.spring.io/spring/docs/current/spring-framewor
 - ****Spring configuration**** (XML, Annotations or Java)
 
 **How Spring MVC Works behind the scenes**
-![FrontController]()
+![FrontController](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-09-20%2016_14_15-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 
 - Front controller is also known as ****DispatcherServlet****
     - It's part of the Spring Framework
@@ -1195,8 +1195,128 @@ At this point, you should have installed:
     - in the future to add more jars specific to Spring MVC, can just try to add a module with those specific jars, copy the jars over and then delete the temp module
 
 ###### S1 Section 11, Lecture 98,99 - Spring MVC Configuration - Overview
+![MVC](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-09-05%2015_53_37-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
+**Spring MVC Configuration Process - part 1**
+- Add configurations to file: WEB-INF/web.xml
+1) Configure Spring MVC Dispatcher Servlet
+2) Set up URL mappings to Spring MVC Dispatcher Servlet
 
+**Spring MVC Configuration Process - part 2**
+- Add configurations to file: WEB-INF/spring-mvc-demo-servlet.xml
+3) Add support for Spring component scanning
+4) Add support for conversion, formatting and validation
+5) Configure Spring MVC View Resolver
 
+**Step 1: Configure Spring DispatcherServlet**
+
+```xml
+ <!--web.xml-->
+<web-app>
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring-mvc-demo-servlet.xml</param-value>
+        </init-param>
+    
+        <load-on-startup>1</load-on-startup>    
+    </servlet>
+</web-app>
+```
+
+- In web.xml, need to add entry for Spring Dispatcher servlet (front controller)
+- Put in a servlet reference by ging it a name and class (servlet-name, servlet-class)
+- Dispatcher servlet is part of the spring framework, so part of the given jar files
+- Then, setup the initial parameter by telling where the Spring context configuration is located 
+    - this will use the spring-mvc-demo-servlet.xml in this case but could've called this anything as long as it is referenced properly
+
+ **Step 2: Setup URL mappings to Spring MVC Dispatcher Servlet**
+ 
+ ```xml
+ <!--web.xml-->
+ <web-app>
+     <servlet>
+         <servlet-name>dispatcher</servlet-name>
+         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        ... 
+     </servlet>
+     
+     <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+     
+ </web-app>
+ ```
+ 
+ - Here, telling the system that for any URL pattern coming in, pass it off to the dispatcher servlet
+ - The url pattern his is '/', meaning all web requests coming in should be handled by the dispatcher servlet
+    - can have a different pattern here like /blah/*
+    - this / handles all requests
+- Imp: Make sure the servlet name matches in both (the name in step 1)
+
+**Step 3: Add support for Spring component scanning**
+```xml
+ <!--spring-mvc-demo-servlet.xml-->
+<beans>
+    <!--Step 3: Add support for component scanning-->
+    <context:component-scan base-package="com.spring-demo-annotation"/>
+</beans>
+```
+   
+- This was seen before where it scans package for any special spring beans and make them available 
+    - so any @components will be made available and it will put them into spring context
+
+**Step 4: Add support for conversion, formatting and validation**
+```xml
+<!--spring-mvc-demo-servlet.xml-->
+<beans>
+    <!--Step 3: Add support for component scanning-->
+    <context:component-scan base-package="com.spring-demo-annotation"/>
+    
+    <!--Step 4: Add support for conversion, formatting and validation support-->
+    <mvc:annotation-driven/>
+</beans>
+```
+- when using Spring mvc, this can perform conversion of form data, format form data and can also perform form validation
+
+**Step 5: Spring MVC View Resolver**
+```xml
+<!--spring-mvc-demo-servlet.xml-->
+<beans>
+    <!--Step 3: Add support for component scanning-->
+    <context:component-scan base-package="com.spring-demo-annotation"/>
+    
+    <!--Step 4: Add support for conversion, formatting and validation support-->
+    <mvc:annotation-driven/>
+    
+    <!--Step 5: Define Spring MVC view resolver-->
+    <bean>
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+</beans>
+```
+
+- view resolver is basically a facny name for 'how do we display the pages', 'where is the page located'
+- At the bottom, make use of InternalResourceViewResolver and then make sure of prefix and suffix
+
+**View Resolver Configs - Explained**
+- When your app provides a "view" name, Spring MVC will 
+    - prepend the prefix
+    - append the suffix
+
+- When your app provides a view name, spring mvc will automatically prepend the prefix and append the suffix
+    -  basically tells where to look for files to render the view for your application
+    - ![ViewResolverEg]()
+    - Here, say we returned a show-student-list.jsp view
+        - Automatically, spring will prepend web-inf/view cause' that's the prefix
+            - it will now have the view name
+        - Then it'll append the suffix (.jsp) 
+    - Now, that's the actual path of the view page that will show
 
 ###### S1 Section 11, Lecture 100 - Spring MVC Configuration - JAR files
 
