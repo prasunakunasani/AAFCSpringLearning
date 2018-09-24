@@ -262,9 +262,6 @@ Spring, select Spring MVC
 - In spring-mvc-demo-servlet.xml, the package name might be red initially since the src folder is empty and no package has yet been created.
     -Also, in prefix, the /view/ has yet to be created so we need to create this directory  
         
-
-
-
 ###### S1 Section 11, Lecture 102 - FAQ: How to configure the Spring Dispatcher Servlet using all Java Code (no xml)
 
 ###### S1 Section 12, Lecture 103 - Creating a Spring Home Controller and View - Overview

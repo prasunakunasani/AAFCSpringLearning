@@ -733,7 +733,7 @@ The method can not accept any arguments. The method should be no-arg.
 6) Click Classpath and then Click ****Add JARs ...****
 7) Navigate to the JAR file ****<your-project>/lib/javax.annotation-api-1.2.jar****
 8) Click ****OK**** then click ****Apply and Close****
-
+---
 Eclipse will perform a rebuild of your project and it will resolve the related build errors.
 
 ###### S1 Section 9, Lecture 82 - Bean Lifecycle Method Annotations - Write some code
@@ -903,7 +903,7 @@ public class SportConfig{
     - Annotation can make use of @ComponentScan to minimize explicit configs
     - Java Code: hard-codes configuration in source code. Any change to configs requires recompiling source code.
 ---
-- "Full Disclaimer: I personally prefer XML configs with @ComponentScan. I like to keep my configs separate from the source code."
+- "Full Disclaimer: I personally prefer XML configs with @ComponentScan. I like to keep my configs separate from the source code. --Instructor"
 ---
 - Here's a blog post on this topic. The author is in favor of hard-coding config information in the Java source code. Also, read the comments at the end of the blog post.
 - Warning: It's from 2012...You only understood until the Patterns section
@@ -1118,6 +1118,7 @@ Spring documentation: https://docs.spring.io/spring/docs/current/spring-framewor
 - ****Spring configuration**** (XML, Annotations or Java)
 
 **How Spring MVC Works behind the scenes**
+
 ![FrontController](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-09-20%2016_14_15-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
 
 - Front controller is also known as ****DispatcherServlet****
@@ -1198,6 +1199,7 @@ At this point, you should have installed:
 
 ###### S1 Section 11, Lecture 98,99 - Spring MVC Configuration - Overview
 ![MVC](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-demo-annotation/Images/2018-09-05%2015_53_37-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
+
 **Spring MVC Configuration Process - part 1**
 - Add configurations to file: WEB-INF/web.xml
 1) Configure Spring MVC Dispatcher Servlet
