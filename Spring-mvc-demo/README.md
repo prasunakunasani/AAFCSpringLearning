@@ -345,8 +345,95 @@ public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationC
 - Found in Lecture 403 - Spring MVC All Java Config at [02:28 mark]
 
 ###### S1 Section 12, Lecture 103 - Creating a Spring Home Controller and View - Overview
+**First Spring MVC Example**
+![FirstMVCApp]()
 
-###### S1 Section 12, Lecture 104,105 - Creating a Spring Home Controller and View - Write Some Code
+- So far saw the MVC, now, we will setup a request mapping for a given path 
+    - Then, will have a home controller that will handle the request which will fort it over to a view template (which will be called main-menu.jsp)
+
+**Development Process**
+1) Create Controller class
+2) Define Controller method
+3) Add Request Mapping to Controller method
+4) Return View Name
+5) Develop View Page
+
+**Step 1: Create Controller class**
+- Annotate class with @Controller
+    - @Controller inherits from @Component supports scanning
+    
+```java
+@Controller
+public class HomeController {
+}
+```
+- Basically you define a class and annotate it @Controller
+    - @Controller basically says that this is a Spring MVC controller 
+    - @Controller inherits from @Component
+        - So, it's a specialized component that supports web MVC
+    - When Spring does component scanning, it also picks up @Controller cause' they inherit/extend from @Component
+
+**Step 2: Define Controller method**
+```java
+@Controller
+public class HomeController{
+        public String showMyPage()
+        {
+            
+        }
+}
+```
+- showMyPage() is the controller method
+    - Spring MVC is flexible so can use any method name
+- return type is String but could've been something else
+
+**Step 3: Add Request Mapping to Controller method**
+```java
+@Controller
+
+@RequestMapping("/")
+public class HomeController{
+        public String showMyPage() {
+            ...
+        }
+}
+```
+- request mapping maps the web request to the given method using the annotation
+- give the actual path that you want to map
+    - In this case, it's the root
+    - This request mapping will handle all kinds of requests including GET, POST, etc
+- Annotation maps a path to a method name
+    - That's why you can choose any method name
+
+**Step 4: Return View Name**
+```java
+@Controller
+public class HomeController{
+        @RequestMapping("/")
+        public String showMyPage() {
+            return "main-menu"; 
+        }
+}
+```
+
+- main-menu is the view name
+- BTS, Spring will use the info from configuration file and find the view page
+    - It will look in the given prefix directory, use the view name and then append the suffix .jsp
+    - Here, will look for /WEB-INF/view/main-menu.jsp
+
+![SpringViewMagic]()
+
+**Step 5: Develop View Page**
+```jsp
+/WEB-INF/view/main-menu.jsp
+<html>
+    <body>
+        <h2>Spring MVC Demo - Home Page</h2
+    </body>
+</html>
+```
+
+
 
 ###### S1 Section 12, Lecture 106 - FAQ: HELP! My Spring MVC Controller is not working. What to do?
 
