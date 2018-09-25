@@ -401,7 +401,7 @@ public class HomeController{
 - request mapping maps the web request to the given method using the annotation
 - give the actual path that you want to map
     - In this case, it's the root
-    - This request mapping will handle all kinds of requests including GET, POST, etc
+    - This request mapping will handle all kinds of requests including GET, POST, other HTTP methods, etc
 - Annotation maps a path to a method name
     - That's why you can choose any method name
 
@@ -415,13 +415,15 @@ public class HomeController{
         }
 }
 ```
-
+![SpringViewMagic]()
 - main-menu is the view name
+    - not returning the complete name of the page since we'll make use of the config file that will add the prefix and suffix 
 - BTS, Spring will use the info from configuration file and find the view page
     - It will look in the given prefix directory, use the view name and then append the suffix .jsp
     - Here, will look for /WEB-INF/view/main-menu.jsp
 
-![SpringViewMagic]()
+
+
 
 **Step 5: Develop View Page**
 ```jsp
@@ -432,6 +434,14 @@ public class HomeController{
     </body>
 </html>
 ```
+
+###### S1 Section 12, Lecture 104 - Creating a Spring Home Controller and View - Write Some Code
+- Create a new package in src
+    - the name should be the same as what you put in the xml files
+- In package, create new class - HomeController
+- In WEB-INF/view, create new jsp file
+
+
 
 
 
