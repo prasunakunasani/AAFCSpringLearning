@@ -260,9 +260,89 @@ Spring, select Spring MVC
     - So, it's smart to just use some starter files
 - Note: 
 - In spring-mvc-demo-servlet.xml, the package name might be red initially since the src folder is empty and no package has yet been created.
-    -Also, in prefix, the /view/ has yet to be created so we need to create this directory  
+    - Also, in prefix, the /view/ has yet to be created so we need to create this directory
+    - Idea will give a 'Spring Configuration Check' with 'Unmapped Spring Configuration files found. Please configure Spring facet or use 'Create Default Context' to add one including all unmapped files.'
+        - This is referring to the 'dispatcher-servlet.xml' that was created by default. 
+        - Delete this file and it should remove that message
         
 ###### S1 Section 11, Lecture 102 - FAQ: How to configure the Spring Dispatcher Servlet using all Java Code (no xml)
+
+**FAQ: How to configure the Spring Dispatcher Servlet using all Java Code (no xml)**
+QUESTION
+- How to configure the Spring Dispatcher Servlet using all Java Code (no xml)?
+ANSWER
+- For Spring MVC, all Java config (no xml) is covered later
+
+However, if you just need the code, here are the steps
+1) Delete the files: web.xml file and spring-mvc-demo-servlet.xml files
+2) Create a new Java package: com.luv2code.springdemo.config
+3) Add the following Java files in your package
+
+```java
+//DemoAppConfig.java
+
+package com.springdemo.config;
+ 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+ 
+@Configuration
+@EnableWebMvc
+@ComponentScan(basePackages="com.springdemo")
+public class DemoAppConfig {
+ 
+	// define a bean for ViewResolver
+ 
+	@Bean
+	public ViewResolver viewResolver() {
+		
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		
+		viewResolver.setPrefix("/WEB-INF/view/");
+		viewResolver.setSuffix(".jsp");
+		
+		return viewResolver;
+	}
+	
+}
+```
+--------------
+```java
+//MySpringMvcDispatcherServletInitializer.java
+
+package com.luv2code.springdemo.config;
+ 
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+ 
+public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+ 
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+ 
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+		return new Class[] { DemoAppConfig.class };
+	}
+ 
+	@Override
+	protected String[] getServletMappings() {
+		return new String[] { "/" };
+	}
+ 
+}
+
+```
+4) Test your app 
+- It should work as desired
+- Full project implementation: https://drive.google.com/open?id=1_5__2SggzgFHt7Rs2YYsv5JHRVX5Orq3
+- Found in Lecture 403 - Spring MVC All Java Config at [02:28 mark]
 
 ###### S1 Section 12, Lecture 103 - Creating a Spring Home Controller and View - Overview
 
