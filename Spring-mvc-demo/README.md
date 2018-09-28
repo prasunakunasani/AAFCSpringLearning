@@ -235,7 +235,7 @@ At this point, you should have installed:
         - Project name:  spring-mvc-demo
         - keep defaults and hit finish
         - Default structure looks like this: 
-            - ![defaultDWP]()
+            - ![defaultDWP](https://github.com/whereismybaymax/AAFCSpringLearning/blob/master/Spring-mvc-demo/Images/2018-09-24%2014_53_56-Spring%20%26%20Hibernate%20for%20Beginners%20_%20Udemy.png)
         - copy over spring jars from Spring release (5.0.2 - https://repo.spring.io/release/org/springframework/spring/) into lib
             - In zip file, in libs directory, the core jar files will be there. 
             - select all, copy, move into WEB-INF->lib directory
@@ -441,8 +441,117 @@ public class HomeController{
 - In package, create new class - HomeController
 - In WEB-INF/view, create new jsp file
 
+###### Understanding Weblogic concepts
+
+![WeblogicDomains]()
+- Web Domain 
+    - a logically related group of web logic servers and resources
+    - a domain always includes an administration server
+- Admin server 
+    - a central point in which you can create, manage and monitor resources and servers within a domain
+    - can also contain 0 or more managed servers 
+- Managed Servers
+    - where you deploy resources like web apps, web services, ejs, data sources, messaging resources, etc
+    - where the bulk of app lives
+
+![WebLogicDeployment]()
+- Since the weblogic domain is logical in nature, it can be deployed in a distributed fashion across many servers or against a single server
+- In diagram, got admin server deployed in single server and then Managed servers 1 and 2 deployed on another server
+- Then server 3 is deployed on another stand alone machine
+- So, weblogic domains allow a scalable architecture to deploy resources across multiple servers (think cloud scale)
+
+- Domains can be defined based on a lot of factors
+    - Eg: by department (HR, etc), geografic region, function (security, operations, etc)
+ 
+**What's in a Domain**
+- Domain consists of a admin server and web logic server and very logical in nature
+- Domain has one admin server and 0 or many managed servers
+    - 0 is allowed with just an admin server but this might only be used in dev environments (when you just create a domain)
+    - In prod, you'd create managed servers and off load processes onto the managed servers
+
+**Contents of a Domain**
+- XML configuration files that define all the Servers, Resources, Services contained within that domain
+- Security Stores
+    - eg: embedded ldap info, key store info for configuring SSL and trust
+- Log files
+    - for app services and services themselves
+- May contain application files
+    - eg: enterprise archive, web archive or ejb
+- Persistent file stores
+    - eg: presisting jsm messages
+- Transaction Logs
+    - If transactions are enabled in the app
+
+**What is a WebLogic Server**
+![WeblogicService]()
+- It's a combination of the domain configuration above associated with a set of configuration files that define it's parameters(run time parameters and configuration)
+- WLS 12c Runtime is a set of java libraries
+    - that runs on top of Java. 
+    - Weblogic is a JVM process listening in on network ports that you defined and configuration
+    
+**WebLogic Resources**
+- Domains also contain resources and services
+- Some are used by managed servers and some by the application itself
+- Administrators can define these resources and deploy them to WL servers with the domain
+- For managed servers, you can define such resources as machine definitions which identify an association between a managed server and a physical or virtual host
+- Most of the resources you'll define are application specific
+     - such as: 
+        - Security Providers
+        - Machines
+        - Virtual Hosts
+        - JDBC
+        - JMS messaging services (like JMS destination or a foreign JMS provider)
+        - Persistent Stores
+        - Logging
+        - Diagnostics & Monitoring
+        - Clusters
+
+**Installing Oracle**
+- Oracle WebLogic 12.1.3 (Generic 880 MB Installer)
+    - Need JDK seperately since it no longer comes with Java JDK installation
+- Oracle installation link: https://www.oracle.com/technetwork/middleware/weblogic/downloads/wls-main-097127.html
+- Step 1: Run generic WebLogic installer
+    - $java -jar fmw_12.1.3.0.0_wls.jar
+- Step 2: Specify Oracle Inventory location
+    - Keep defaults? Not sure what to do here
+- Step 3: Specify Oracle Home Location 
+    - Basically where you want the wls12130 to go (eg: for SMS it was C:\Oracle\wls12130)
+- Step 4: Specify installation type
+    - For SMS you picked WebLogic Server (tutorial says Complete with Examples)
+        - todo - need to figure out what the dif is (super low priority compared to spring)
+- Just go through the rest of the defaults
 
 
+
+###### S1 Section 12, Lecture 105 - Creating a Spring Home Controller and View - Write Some Code + Server setup
+**Run the application**
+- For Tomcat (according to video instructions for Eclipse):
+- Right click spring-mvc-demo, Run As -> Run on Server
+    - Choose default server (Tomcat v8.0 Server at localhost) and click Finish
+
+- For Tomcat (for intellij)
+- Settings->Application Servers-> + ->Tomcat
+
+
+- For Weblogic (based on your experimentation):
+- Click on Project settings (top right corner, folder icon with 3 small blue cubes) ![ProjectSettingsIcon]()
+    - Click on Artificats and make sure the 'web:war exploded' entry is there for your application. 
+    - It seemed to have been autogenerated. Else, add entry. Will apparently need it for app server later
+- Settings (press shift twice and type it in) 
+    - Application Servers, + , Weblogic Server
+    - Weblogic home is the wls12120 looking folder. 
+        - In your case, you just used the wls12130 folder that would've been transfered to your drive when you ran David's SMS setup script
+        - Click OK twice
+
+- Attempt 1 (Failed)
+- At top, 'Add Configuration', +, WebLogic Server -> Local
+    - Name: 'WLS_Spring_demo_mvc'
+    - For domain, just called it 'my_domain_springdemo', copy pasted SMS_Domain with that name and put it where the SMS_Domain was...
+        - Obviously wrong until you knwo how to create a domain
+    - In Deployment tab, +, Artifact, selected the war exploded from before
+    - Run-> Run WLS_Spring_Demo_mvc
+        - Obviously, WLS keeps looking for SMS stuff. 
+        - So..delete this configuration
 
 
 ###### S1 Section 12, Lecture 106 - FAQ: HELP! My Spring MVC Controller is not working. What to do?
