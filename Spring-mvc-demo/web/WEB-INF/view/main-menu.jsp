@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+<!Doctype>
+<html>
 <body>
 <h2>Spring MVC Demo - Home Page</h2>
 </body>
